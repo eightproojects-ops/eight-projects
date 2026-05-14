@@ -184,6 +184,10 @@
     ballText.textContent = '8';
     svg.appendChild(ballRing); svg.appendChild(ballShine); svg.appendChild(ballText);
 
+    // blackout — envahit tout quand la boule rentre
+    const blackout = mk('rect', { x: '0', y: '0', width: '480', height: '480', fill: '#0a0a0a', opacity: '0', 'pointer-events': 'none' });
+    svg.appendChild(blackout);
+
     stage.appendChild(svg);
 
     let lastIdx = -1;
@@ -211,6 +215,7 @@
       let bridgeOp = 0, bridgeDotsOp = 0, bridgeOffset = 0;
       let ballOp = 0;
       let trailOp = 0;
+      blackout.setAttribute('opacity', '0');
 
       if (v <= 1){
         // 0 → 1 : Le chiffre → Fusion (les deux cercles se rejoignent en un seul)
@@ -284,6 +289,9 @@
 
         ballOp = morphT * (1 - dropT * 0.6);
         trailOp = rollT * (1 - dropT);
+        // blackout commence dès que la balle commence à tomber
+        const blackoutT = clamp((k - 0.75) / 0.25, 0, 1);
+        blackout.setAttribute('opacity', (blackoutT * blackoutT).toFixed(3));
       }
 
       // --- apply ---
