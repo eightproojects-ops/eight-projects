@@ -55,13 +55,11 @@
       if (pct < 99.5){ requestAnimationFrame(tick); }
       else{
         count.textContent = '100%';
-        loader.classList.add('is-fill');
-        setTimeout(() => loader.classList.add('is-rotating'), 300);
         setTimeout(() => {
           loader.classList.add('is-done');
           document.body.classList.add('is-ready');
           window.dispatchEvent(new Event('site:ready'));
-        }, 2200);
+        }, 600);
       }
     }
     requestAnimationFrame(tick);
@@ -137,6 +135,19 @@
     const svg = mk('svg', { viewBox: '0 0 480 480' });
     svg.classList.add('vision__svg');
 
+    // SVG defs — gradients for the premium 8-ball
+    const defs = mk('defs');
+    const ballGrad = mk('radialGradient', { id: 'ball-grad', cx: '32%', cy: '28%', r: '72%', fx: '32%', fy: '28%' });
+    [['0%','#252525'],['35%','#111111'],['75%','#060606'],['100%','#020202']].forEach(([o,c]) => {
+      const s = mk('stop', { offset: o, 'stop-color': c }); ballGrad.appendChild(s);
+    });
+    const discGrad = mk('radialGradient', { id: 'disc-grad', cx: '45%', cy: '38%', r: '65%' });
+    [['0%','#ffffff'],['100%','#ddd8ce']].forEach(([o,c]) => {
+      const s = mk('stop', { offset: o, 'stop-color': c }); discGrad.appendChild(s);
+    });
+    defs.appendChild(ballGrad); defs.appendChild(discGrad);
+    svg.appendChild(defs);
+
     // graduation ticks around the SVG
     const marksG = mk('g', { opacity: '0.16' });
     for (let i = 0; i < 24; i++){
@@ -175,16 +186,18 @@
     const bridgeDotB = mk('circle', { r: 4, fill: '#d8d0bd', opacity: '0' });
     svg.appendChild(bridge); svg.appendChild(bridgeDotA); svg.appendChild(bridgeDotB);
 
-    // 8-ball decorations — white disc + "8" + highlight (Résultats final)
-    const ballHighlight = mk('ellipse', { fill: '#f6f2ea', opacity: '0' });
-    const ballDisc = mk('circle', { fill: '#f6f2ea', opacity: '0' });
+    // 8-ball decorations — disc + "8" + highlights + rim light (Résultats final)
+    const rimLight = mk('path', { fill: 'none', stroke: 'rgba(216,208,189,0.28)', 'stroke-width': '1.4', 'stroke-linecap': 'round', opacity: '0' });
+    const ballHighlight = mk('ellipse', { fill: '#f6f2ea', opacity: '0' }); // soft glow
+    const ballSpec = mk('ellipse', { fill: '#ffffff', opacity: '0' });       // sharp specular
+    const ballDisc = mk('circle', { fill: 'url(#disc-grad)', opacity: '0' });
     const ballText = mk('text', {
       'text-anchor': 'middle', 'dominant-baseline': 'central',
       fill: '#0a0a0a', 'font-family': 'Montserrat, sans-serif',
-      'font-weight': '500', opacity: '0'
+      'font-weight': '300', 'letter-spacing': '-1', opacity: '0'
     });
     ballText.textContent = '8';
-    svg.appendChild(ballHighlight); svg.appendChild(ballDisc); svg.appendChild(ballText);
+    svg.appendChild(rimLight); svg.appendChild(ballHighlight); svg.appendChild(ballSpec); svg.appendChild(ballDisc); svg.appendChild(ballText);
 
     stage.appendChild(svg);
 
@@ -272,8 +285,8 @@
         c2Stroke = `rgba(40,40,40,${(1 - fillK * 0.8).toFixed(3)})`;
 
         c1y = 240; c1r = 70;
-        c1Fill = `rgba(10,10,10,${fillK.toFixed(3)})`;
-        c1Stroke = `rgba(60,60,60,${fillK.toFixed(3)})`;
+        c1Fill = fillK > 0.01 ? 'url(#ball-grad)' : 'none';
+        c1Stroke = `rgba(80,70,60,${(fillK * 0.5).toFixed(3)})`;
 
         const morphT = clamp(k / 0.20, 0, 1);
         const rollT  = clamp((k - 0.20) / 0.60, 0, 1);
@@ -334,20 +347,36 @@
         bridgeDotB.setAttribute('opacity', '0');
       }
 
-      // 8-ball decorations (white disc + "8" + highlight) on top of c1 during Résultats
+      // 8-ball decorations — premium render
       const ballEff = ballOp * c1Op;
+      // disc (white circle with gradient)
       ballDisc.setAttribute('cx', c1x.toFixed(2)); ballDisc.setAttribute('cy', c1y.toFixed(2));
-      ballDisc.setAttribute('r', (c1r * 0.34).toFixed(2));
+      ballDisc.setAttribute('r', (c1r * 0.38).toFixed(2));
       ballDisc.setAttribute('opacity', ballEff.toFixed(3));
+      // "8" numeral
       ballText.setAttribute('x', c1x.toFixed(2)); ballText.setAttribute('y', c1y.toFixed(2));
-      ballText.setAttribute('font-size', (c1r * 0.48).toFixed(2));
+      ballText.setAttribute('font-size', (c1r * 0.40).toFixed(2));
       ballText.setAttribute('opacity', ballEff.toFixed(3));
-      // highlight (reflet sur la balle)
-      ballHighlight.setAttribute('cx', (c1x - c1r * 0.30).toFixed(2));
-      ballHighlight.setAttribute('cy', (c1y - c1r * 0.40).toFixed(2));
-      ballHighlight.setAttribute('rx', (c1r * 0.32).toFixed(2));
-      ballHighlight.setAttribute('ry', (c1r * 0.16).toFixed(2));
-      ballHighlight.setAttribute('opacity', (ballEff * 0.45).toFixed(3));
+      // soft ambient highlight (large, low opacity)
+      ballHighlight.setAttribute('cx', (c1x - c1r * 0.28).toFixed(2));
+      ballHighlight.setAttribute('cy', (c1y - c1r * 0.38).toFixed(2));
+      ballHighlight.setAttribute('rx', (c1r * 0.38).toFixed(2));
+      ballHighlight.setAttribute('ry', (c1r * 0.22).toFixed(2));
+      ballHighlight.setAttribute('opacity', (ballEff * 0.18).toFixed(3));
+      // sharp specular point (top-left)
+      ballSpec.setAttribute('cx', (c1x - c1r * 0.30).toFixed(2));
+      ballSpec.setAttribute('cy', (c1y - c1r * 0.42).toFixed(2));
+      ballSpec.setAttribute('rx', (c1r * 0.10).toFixed(2));
+      ballSpec.setAttribute('ry', (c1r * 0.06).toFixed(2));
+      ballSpec.setAttribute('opacity', (ballEff * 0.75).toFixed(3));
+      // rim light arc (bottom-right, subtle bone color)
+      if (ballEff > 0.01){
+        const ra1 = Math.PI * 0.30, ra2 = Math.PI * 0.82;
+        const rlx1 = c1x + Math.cos(ra1)*c1r, rly1 = c1y + Math.sin(ra1)*c1r;
+        const rlx2 = c1x + Math.cos(ra2)*c1r, rly2 = c1y + Math.sin(ra2)*c1r;
+        rimLight.setAttribute('d', `M ${rlx1.toFixed(2)} ${rly1.toFixed(2)} A ${c1r.toFixed(2)} ${c1r.toFixed(2)} 0 0 1 ${rlx2.toFixed(2)} ${rly2.toFixed(2)}`);
+        rimLight.setAttribute('opacity', (ballEff * 0.55).toFixed(3));
+      } else { rimLight.setAttribute('opacity', '0'); }
 
       // Trail (only during Résultats roll)
       if (trailOp > 0.001){
