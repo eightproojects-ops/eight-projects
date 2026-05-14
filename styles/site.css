@@ -220,26 +220,25 @@ p{ text-wrap: pretty; }
   display:flex; flex-direction:column; align-items:center; gap: 26px;
 }
 .loader__eight{
-  width: 120px; height: 200px;
+  width: 100px; height: 126px;
   position: relative;
-  transform: rotate(0deg);
-  transition: transform 2.6s var(--ease), width 2.6s var(--ease), height 2.6s var(--ease);
-}
-.loader.is-rotating .loader__eight{
-  transform: rotate(90deg);
 }
 .loader__eight svg{ width:100%; height:100%; overflow: visible; }
+.loader__eight .lemniscate-bg{
+  stroke: rgba(255,255,255,.12); stroke-width: 2; fill: none;
+}
 .loader__eight .lemniscate-fill{
   stroke: var(--paper);
-  stroke-width: 1.5;
+  stroke-width: 2;
   fill: none;
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  transition: stroke-dashoffset 2.4s var(--ease);
+  stroke-linecap: round;
+  stroke-dasharray: 141 424;
+  stroke-dashoffset: 0;
+  animation: eight-run 1.6s linear infinite;
+  filter: drop-shadow(0 0 5px rgba(246,242,234,.55));
 }
-.loader.is-fill .loader__eight .lemniscate-fill{ stroke-dashoffset: 0; }
-.loader__eight .lemniscate-bg{
-  stroke: rgba(255,255,255,.18); stroke-width: 1.5; fill: none;
+@keyframes eight-run {
+  to { stroke-dashoffset: -565; }
 }
 .loader__label{
   font-family: var(--mono); font-size:11px; letter-spacing:.32em; text-transform:uppercase;
@@ -933,6 +932,40 @@ p{ text-wrap: pretty; }
   text-align: center;
 }
 .mk-phone__bot{ display:flex; gap:10px; justify-content: space-between; font-family: var(--mono); font-size: 9px; color: var(--muted); letter-spacing:.18em; text-transform: uppercase; }
+
+/* ---- Mockup palette brand (Atelier Sérine) ---- */
+.mk-palette{
+  width:100%; height:100%;
+  background: #59050C;
+  border-radius: 5px;
+  position: relative; overflow: hidden;
+  display:flex; flex-direction:column; justify-content:space-between;
+  padding: 14px 12px 10px;
+}
+.mk-palette::before{
+  content:''; position:absolute; top:-28px; right:-28px;
+  width:90px; height:90px; border-radius:50%;
+  border: 1px solid rgba(191,54,79,.45);
+}
+.mk-palette::after{
+  content:''; position:absolute; top:8px; right:8px;
+  width:52px; height:52px; border-radius:50%;
+  border: 1px solid rgba(217,105,65,.3);
+}
+.mk-palette__top{ display:flex; flex-direction:column; gap:5px; position:relative; z-index:1; }
+.mk-palette__label{
+  font-family: var(--mono); font-size:8px; letter-spacing:.22em;
+  text-transform:uppercase; color: rgba(255,255,255,.35);
+}
+.mk-palette__title{
+  font-family: var(--serif); font-style:italic;
+  font-size: 17px; line-height:1.15;
+  color: rgba(191,137,117,.9);
+}
+.mk-palette__swatches{
+  display:flex; gap:3px; height:6px;
+}
+.mk-palette__swatches span{ height:100%; border-radius:3px; }
 
 /* ============================================================
    APPROCHE

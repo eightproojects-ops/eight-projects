@@ -12,7 +12,7 @@
       const parts = html.split(/(<[^>]+>|\s+)/g);
       el.innerHTML = parts.map(part => {
         if (!part.trim() || part.startsWith('<')) return part;
-        return `<span class="sw" style="display:inline-block;overflow:hidden;vertical-align:bottom"><span class="sw__inner" style="display:inline-block;transform:translateY(110%);opacity:0;transition:transform 0.9s cubic-bezier(0.2,0.7,0.2,1),opacity 0.9s cubic-bezier(0.2,0.7,0.2,1)">${part}</span></span>`;
+        return `<span class="sw" style="display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:0.22em;margin-bottom:-0.22em"><span class="sw__inner" style="display:inline-block;transform:translateY(115%);transition:transform 0.95s cubic-bezier(0.16,1,0.3,1)">${part}</span></span>`;
       }).join('');
       el.style.overflow = 'visible';
     });
@@ -80,21 +80,22 @@
     let lastScroll = 0;
     let currentSkew = 0;
     let targetSkew = 0;
+    // Apply skew to section wrappers only — not to headings (conflicts with split text)
+    const skewTargets = document.querySelectorAll('.marquee-track, .wordmark__mark');
 
     function onScroll() {
       const scroll = window.scrollY;
       const delta = scroll - lastScroll;
       lastScroll = scroll;
-      targetSkew = clamp(delta * -0.04, -1.5, 1.5);
+      targetSkew = clamp(delta * -0.025, -0.8, 0.8);
     }
 
     function animateSkew() {
       currentSkew = lerp(currentSkew, targetSkew, 0.08);
       targetSkew = lerp(targetSkew, 0, 0.12);
-
       if (Math.abs(currentSkew) > 0.001) {
-        document.querySelectorAll('.hero__line, .universe__title, .services__title, .projects__title').forEach(el => {
-          el.style.transform = el.style.transform.replace(/skewY\([^)]*\)/, '') + ` skewY(${currentSkew.toFixed(3)}deg)`;
+        skewTargets.forEach(el => {
+          el.style.transform = `skewX(${currentSkew.toFixed(3)}deg)`;
         });
       }
       requestAnimationFrame(animateSkew);
@@ -118,7 +119,7 @@
       });
     }, { rootMargin: '-8% 0px -8% 0px', threshold: 0.05 });
 
-    document.querySelectorAll('.universe__block, .testi__card, .approach__cell, .svc-card').forEach(el => {
+    document.querySelectorAll('.universe__block, .svc-card').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(40px) scale(0.97)';
       entranceIO.observe(el);
