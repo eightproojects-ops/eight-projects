@@ -9,6 +9,158 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/site.css" />
+<style>
+/* ====== MARQUEE ====== */
+.marquee-strip {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  background: rgba(255,255,255,.02);
+}
+.marquee-track {
+  display: flex;
+  gap: 40px;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.marquee-track span { flex-shrink: 0; }
+.marquee-track .sep { color: var(--bone); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ====== MANIFESTO ====== */
+.manifesto { padding-inline: var(--pad-x); }
+.manifesto__inner {
+  border: 1px solid var(--line);
+  border-radius: 32px;
+  padding: clamp(60px, 8vw, 120px) clamp(40px, 6vw, 100px);
+  background:
+    radial-gradient(60% 60% at 0% 100%, oklch(0.82 0.10 60 / 0.10), transparent 60%),
+    radial-gradient(50% 50% at 100% 0%, oklch(0.78 0.10 230 / 0.08), transparent 60%),
+    rgba(255,255,255,.025);
+  display: grid;
+  gap: 60px;
+}
+.manifesto__text {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(28px, 4vw, 60px);
+  line-height: 1.2;
+  letter-spacing: -.02em;
+  color: var(--paper);
+  max-width: 22ch;
+}
+.manifesto__text em {
+  color: var(--bone);
+  font-style: italic !important;
+}
+.manifesto__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+}
+.manifesto__stat {
+  padding-right: 32px;
+  border-right: 1px solid var(--line);
+  padding-left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.manifesto__stat:first-child { padding-left: 0; }
+.manifesto__stat:last-child { border-right: 0; }
+.manifesto__stat b {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(48px, 5vw, 80px);
+  letter-spacing: -.04em;
+  color: var(--paper);
+  line-height: 1;
+}
+.manifesto__stat span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 800px) {
+  .manifesto__stats { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .manifesto__stat { border-right: 0; padding-left: 0; }
+}
+
+/* ====== TESTIMONIALS ====== */
+.testimonials { padding-inline: var(--pad-x); }
+.testi__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+.testi__title {
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 200;
+  line-height: .98;
+  letter-spacing: -.03em;
+}
+.testi__title em { font-style: italic !important; font-weight: 200; color: var(--bone); }
+.testi__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.testi__card {
+  border-radius: 24px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 320px;
+  transition: border-color .5s var(--ease);
+}
+.testi__card:hover { border-color: var(--line-strong); }
+.testi__quote {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--paper);
+  font-style: italic;
+}
+.testi__author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.testi__name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.testi__role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 900px) { .testi__grid { grid-template-columns: 1fr; } }
+</style>
 </head>
 <body>
 
@@ -84,8 +236,57 @@
     <div class="hero__scroll"><span>Défiler</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 5v14"></path><path d="M6 13l6 6 6-6"></path></svg></div>
   </div>
 
-  <div class="hero__corner hero__corner--bl">Studio créatif digital — Paris · Bruxelles</div>
+  <div class="hero__corner hero__corner--bl">Studio créatif digital — Bruxelles</div>
   <div class="hero__corner hero__corner--br">04 places · 2026</div>
+</section>
+
+<!-- ============================== MARQUEE ============================== -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>Infinite by design</span><span class="sep">·</span>
+    <span>Built for winners</span><span class="sep">·</span>
+    <span>Branding · Web · Direction artistique</span><span class="sep">·</span>
+    <span>We don't build brands. We build legacies.</span><span class="sep">·</span>
+    <span>04 places · 2026</span><span class="sep">·</span>
+    <span>Bruxelles</span><span class="sep">·</span>
+    <span>Infinite by design</span><span class="sep">·</span>
+    <span>Built for winners</span><span class="sep">·</span>
+    <span>Branding · Web · Direction artistique</span><span class="sep">·</span>
+    <span>We don't build brands. We build legacies.</span><span class="sep">·</span>
+    <span>04 places · 2026</span><span class="sep">·</span>
+    <span>Bruxelles</span><span class="sep">·</span>
+  </div>
+</div>
+
+<!-- ============================== MANIFESTO ============================== -->
+<section class="manifesto section">
+  <div class="manifesto__inner reveal">
+    <span class="eyebrow"><span class="dot"></span><span class="num">∞</span> · Manifeste</span>
+    <p class="manifesto__text" data-split>
+      Un logo ne fait pas une marque.<br/>
+      Une tendance ne fait pas une identité.<br/>
+      Une agence ne fait pas ce que nous faisons.<br/>
+      <em>Nous construisons des systèmes qui durent.</em>
+    </p>
+    <div class="manifesto__stats">
+      <div class="manifesto__stat reveal">
+        <b data-count="8">08</b>
+        <span>Étapes · chaque projet</span>
+      </div>
+      <div class="manifesto__stat reveal">
+        <b data-count="6">06</b>
+        <span>Disciplines maîtrisées</span>
+      </div>
+      <div class="manifesto__stat reveal">
+        <b data-count="4">04</b>
+        <span>Places ouvertes · 2026</span>
+      </div>
+      <div class="manifesto__stat reveal">
+        <b data-count="∞">∞</b>
+        <span>Notre ambition</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============================== VISION (sticky scroll-morph) ============================== -->
@@ -123,7 +324,7 @@
 <section class="section universe" id="univers">
   <div class="universe__left reveal">
     <span class="eyebrow"><span class="dot"></span><span class="num">03</span> · Univers</span>
-    <h2 class="universe__title">Un studio,<br/>pas une <em>agence</em>.</h2>
+    <h2 class="universe__title" data-split>Un studio,<br/>pas une <em>agence</em>.</h2>
     <p class="universe__lede">
       Eight Projects est un studio créatif digital fondé autour du chiffre 8 — symbole d&apos;infini, d&apos;équilibre, de structure et de mouvement continu. Chaque projet est traité comme un objet singulier : pensé, dessiné, écrit.
     </p>
@@ -166,9 +367,9 @@
   <div class="services__head">
     <div class="reveal">
       <span class="eyebrow"><span class="dot"></span><span class="num">04</span> · Services</span>
-      <h2 class="services__title">Six disciplines,<br/>une seule <em>écriture</em>.</h2>
+      <h2 class="services__title" data-split>Six disciplines.<br/>Une seule <em>obsession.</em></h2>
     </div>
-    <p class="services__lede reveal">Nous opérons sur l&apos;ensemble du cycle : de la première idée à la dernière livraison. Six pratiques articulées par un même système d&apos;identité. <strong style="color:var(--paper)">Faites défiler →</strong></p>
+    <p class="services__lede reveal">De la première idée à la dernière livraison, chaque discipline parle le même langage. Un système. Une voix. Zéro compromis. <strong style='color:var(--paper)'>Faites défiler →</strong></p>
   </div>
 
   <div class="svc-ctrl reveal">
@@ -240,7 +441,7 @@
   <div class="projects__head">
     <div class="reveal">
       <span class="eyebrow"><span class="dot"></span><span class="num">05</span> · Projets</span>
-      <h2 class="projects__title">Six projets — <em>une grammaire visuelle.</em></h2>
+      <h2 class="projects__title" data-split>Six projets — <em>une grammaire visuelle.</em></h2>
     </div>
     <p class="hero__lede reveal" style="max-width:36ch">Sélection 2025–2026. Cliquez sur une ligne pour ouvrir l&apos;étude détaillée.</p>
   </div>
@@ -393,9 +594,9 @@
   <div class="approach__head">
     <div class="reveal">
       <span class="eyebrow"><span class="dot"></span><span class="num">06</span> · Approche</span>
-      <h2 class="approach__title">Quatre temps,<br/>une seule méthode.</h2>
+      <h2 class="approach__title" data-split>La méthode<br/>des <em>gagnants.</em></h2>
     </div>
-    <p class="services__lede reveal">Quelle que soit la discipline — branding, web, contenu, print — nous travaillons en quatre temps. Chaque phase produit un livrable autonome, documenté, mesurable.</p>
+    <p class="services__lede reveal">Peu importe la discipline — branding, web, contenu, print — notre méthode ne change jamais. Quatre phases. Chaque livrable est documenté, défendu, mesurable.</p>
   </div>
 
   <div class="approach__grid">
@@ -403,29 +604,60 @@
       <span class="n"><span class="dot"></span>Phase 01</span>
       <div class="glyph-mini"></div>
       <h4>Comprendre</h4>
-      <p>On commence par écouter. Entretiens, audit, lecture du marché. Le brief n&apos;est pas posé d&apos;avance — il se construit à deux.</p>
+      <p>Tout commence par une obsession : vous comprendre mieux que vous ne vous comprenez. Entretiens, audit, immersion. Le brief ne se donne pas — il se construit.</p>
       <span class="tag">Diagnostic · Cadrage · Brief</span>
     </div>
     <div class="approach__cell reveal">
       <span class="n"><span class="dot"></span>Phase 02</span>
       <div class="glyph-mini"></div>
       <h4>Orienter</h4>
-      <p>Une direction claire, posée à l&apos;oral, défendue. Un parti pris assumé plutôt qu&apos;un éventail tiède de variations.</p>
+      <p>Une direction. Une seule. Pas un éventail de propositions tièdes — une conviction assumée, défendue devant vous. C&apos;est là que les gagnants se distinguent.</p>
       <span class="tag">Direction · Parti pris · Choix</span>
     </div>
     <div class="approach__cell reveal">
       <span class="n"><span class="dot"></span>Phase 03</span>
       <div class="glyph-mini"></div>
       <h4>Construire</h4>
-      <p>Production en cycles courts. Vous voyez le travail au fur et à mesure — pas d&apos;effet d&apos;annonce, des livraisons mesurables.</p>
+      <p>Exécution en cycles courts, livrables visibles à chaque étape. Pas d&apos;effet tunnel. Pas de surprise. Vous voyez le travail naître.</p>
       <span class="tag">Exécution · Itérations · Qualité</span>
     </div>
     <div class="approach__cell reveal">
       <span class="n"><span class="dot"></span>Phase 04</span>
       <div class="glyph-mini"></div>
       <h4>Accompagner</h4>
-      <p>Le projet ne s&apos;arrête pas à la livraison. Suivi, ajustements, mesure — pour que la mise au monde dure dans le temps.</p>
+      <p>Le lancement est un début, pas une fin. On reste. On mesure. On ajuste. Parce qu&apos;une grande marque ne se livre pas — elle se cultive.</p>
       <span class="tag">Lancement · Suivi · Mesure</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TESTIMONIALS ============================== -->
+<section class="section testimonials" id="temoignages">
+  <div class="testi__head reveal">
+    <span class="eyebrow"><span class="dot"></span><span class="num">06</span> · Ce qu'ils disent</span>
+    <h2 class="testi__title" data-split>Les meilleurs<br/>parlent <em>d'eux-mêmes.</em></h2>
+  </div>
+  <div class="testi__grid">
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Eight Projects n'a pas juste créé notre identité. Ils ont construit le langage de notre marque — chaque détail défendu, chaque choix assumé. Le résultat dépasse ce qu'on imaginait."</p>
+      <div class="testi__author">
+        <span class="testi__name">Léa Moreau</span>
+        <span class="testi__role">Fondatrice · Maison Octave</span>
+      </div>
+    </div>
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Travailler avec Eight Projects, c'est travailler avec des gens qui ont une position. Pas de compromis, pas de demi-mesures. Exactement ce dont notre studio avait besoin."</p>
+      <div class="testi__author">
+        <span class="testi__name">Marc Vidal</span>
+        <span class="testi__role">Directeur · Atelier Vega</span>
+      </div>
+    </div>
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Le système qu'ils ont créé pour nous est transposable partout — du packaging au digital. Une seule grammaire, déployée avec une précision remarquable."</p>
+      <div class="testi__author">
+        <span class="testi__name">Karim Nasser</span>
+        <span class="testi__role">CEO · Volta Mobility</span>
+      </div>
     </div>
   </div>
 </section>
@@ -436,8 +668,8 @@
     <div class="contact__grid">
       <div>
         <span class="eyebrow"><span class="dot"></span><span class="num">07</span> · Contact</span>
-        <h2 class="contact__title">Démarrons<br/>un <em>projet.</em></h2>
-        <p class="contact__lede">Quatre places ouvertes pour 2026. Décrivez votre projet en quelques lignes — nous répondons en 48&nbsp;h avec une première lecture.</p>
+        <h2 class="contact__title" data-split>Prêts à<br/><em>dominer ?</em></h2>
+        <p class="contact__lede">Quatre places. Pas plus. Nous choisissons nos clients avec la même exigence qu&apos;ils nous choisissent. Si vous lisez ces lignes, vous savez déjà que vous n&apos;êtes pas comme les autres.</p>
 
         <div style="margin-top: 36px; display:grid; gap: 14px; font-family: var(--mono); font-size: 12px; letter-spacing:.16em; text-transform:uppercase; color: var(--muted);">
           <div><span style="color:var(--paper)">studio@eight-projects.fr</span></div>
@@ -514,6 +746,7 @@
 
 <!-- ============================== FOOTER ============================== -->
 <footer class="footer">
+  <div class="footer__big">We don't build<br/>brands. We build <em>legacies.</em></div>
   <div>
     <a class="nav__brand" href="#top">
       <svg viewBox="0 0 89.08 146.57" xmlns="http://www.w3.org/2000/svg" width="22" height="22"><path fill="#f6f2ea" d="M88.78,110.82c-2.91,22.63-23.22,34.41-45.34,35.66-10.05.57-19.83-1.5-28.29-6.85C.35,130.25-3.83,113.37,3.61,97.67c5.65-11.93,15.88-21.22,26.5-29.39C14.96,58.95,5.06,46.34,8.1,28.54c1.63-9.56,8.02-18.56,17.4-23.58,13.49-7.22,33.63-6.93,45.59,3.31,8.49,7.27,11.46,18.4,7.92,29.02-4.1,12.28-14.49,21.93-24.96,30.17,18.28,9.66,37.72,20.1,34.73,43.35Z"/></svg>
@@ -549,11 +782,12 @@
   </div>
   <div class="footer__bot">
     <span>© <span data-year>2026</span> · Eight Projects — <strong>tous droits réservés</strong></span>
-    <span>Paris · Bruxelles · Lisbonne</span>
+    <span>Bruxelles · Studio créatif</span>
     <span class="mono"><span data-clock>00:00:00 · PARIS</span></span>
   </div>
 </footer>
 
+<script src="scripts/animations.js"></script>
 <script src="scripts/site.js"></script>
 </body>
 </html>
