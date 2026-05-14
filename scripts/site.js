@@ -292,6 +292,7 @@
         // blackout commence dès que la balle commence à tomber
         const blackoutT = clamp((k - 0.75) / 0.25, 0, 1);
         blackout.setAttribute('opacity', (blackoutT * blackoutT).toFixed(3));
+        svg.style.filter = blackoutT > 0.01 ? 'none' : '';
       }
 
       // --- apply ---
