@@ -10,12 +10,74 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/site.css" />
 <style>
+/* ====== SPLIT HERO ====== */
+.split-hero{
+  position:relative; overflow:hidden;
+  min-height:100dvh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding-top: clamp(80px,10vh,120px);
+}
+.split-hero__top,.split-hero__bot{
+  position:relative; overflow:hidden;
+  display:grid; align-items:end;
+  padding:0 var(--pad-x);
+}
+.split-hero__top{ grid-template-columns:1fr auto; }
+.split-hero__bot{ grid-template-columns:auto 1fr; }
+.split-hero__word{
+  font-family:var(--display); font-weight:300;
+  font-size: clamp(88px,17vw,248px);
+  letter-spacing:-.04em; line-height:.86;
+  color:var(--paper); text-transform:uppercase;
+  white-space:nowrap; user-select:none;
+  padding-bottom:10px;
+}
+.split-hero__info{
+  max-width:260px; padding-bottom:18px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.split-hero__info p{
+  font-family:var(--sans); font-size:13px; line-height:1.65;
+  color:var(--muted);
+}
+.split-hero__band{
+  height:42px; overflow:hidden;
+  background:var(--paper); margin:10px 0;
+  display:flex; align-items:center;
+}
+.split-hero__band-track{
+  display:flex; gap:40px; width:max-content;
+  animation:sh-ticker 24s linear infinite;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink); white-space:nowrap; padding:0 20px;
+}
+.split-hero__band-track .sep{ color:rgba(10,10,10,.35); }
+@keyframes sh-ticker{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.split-hero__cta{
+  display:flex; gap:16px; align-items:center;
+  padding:28px var(--pad-x) 0;
+}
+.split-hero__corner{
+  position:absolute;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
+.split-hero__corner--tl{ top:clamp(16px,3vh,32px); left:var(--pad-x); }
+.split-hero__corner--tr{ top:clamp(16px,3vh,32px); right:var(--pad-x); }
+.split-hero__corner--bl{ bottom:clamp(20px,3vh,36px); left:var(--pad-x); }
+.split-hero__corner--br{ bottom:clamp(20px,3vh,36px); right:var(--pad-x); }
+@media(max-width:800px){
+  .split-hero__info{ display:none; }
+  .split-hero__top,.split-hero__bot{ grid-template-columns:1fr; }
+}
+
 /* ====== MANIFESTO ====== */
 .manifesto { padding-inline: var(--pad-x); }
 .manifesto__inner {
   border: 1px solid var(--line);
   border-radius: 24px;
-  padding: clamp(36px, 5vw, 72px) clamp(28px, 5vw, 72px);
+  padding: clamp(24px, 3.5vw, 48px) clamp(20px, 3.5vw, 52px);
   background:
     radial-gradient(60% 60% at 0% 100%, oklch(0.82 0.10 60 / 0.10), transparent 60%),
     radial-gradient(50% 50% at 100% 0%, oklch(0.78 0.10 230 / 0.08), transparent 60%),
@@ -26,11 +88,10 @@
 .manifesto__text {
   font-family: var(--display);
   font-weight: 200;
-  font-size: clamp(22px, 2.6vw, 40px);
+  font-size: clamp(18px, 1.8vw, 28px);
   line-height: 1.25;
   letter-spacing: -.02em;
   color: var(--paper);
-  max-width: 28ch;
 }
 .manifesto__text em {
   color: var(--bone);
@@ -56,7 +117,7 @@
 .manifesto__stat b {
   font-family: var(--display);
   font-weight: 200;
-  font-size: clamp(30px, 3.2vw, 52px);
+  font-size: clamp(22px, 2.2vw, 36px);
   letter-spacing: -.04em;
   color: var(--paper);
   line-height: 1;
@@ -184,30 +245,53 @@
 </nav>
 
 <!-- ============================== HERO ============================== -->
-<section class="hero" id="top">
-  <div class="orb orb--a hero__orb1"></div>
-  <div class="orb orb--b hero__orb2"></div>
+<section class="split-hero" id="top">
+  <div class="orb orb--a" style="position:absolute;top:-120px;left:-80px;pointer-events:none;z-index:0"></div>
+  <div class="orb orb--c" style="position:absolute;bottom:-80px;right:-60px;pointer-events:none;z-index:0"></div>
 
-  <div class="hero__corner hero__corner--tl"><span class="dot"></span><span>N° 008 <b>· Studio</b></span></div>
-  <div class="hero__corner hero__corner--tr"><span data-clock>00:00:00 · PARIS</span></div>
+  <div class="split-hero__corner split-hero__corner--tl"><span class="dot"></span><span>N° 008 · Studio</span></div>
+  <div class="split-hero__corner split-hero__corner--tr"><span data-clock>00:00:00 · BXL</span></div>
 
-  <div></div>
-
-  <div class="hero__lines reveal">
-    <div class="hero__line" data-hero-line="1">From idea to identity.</div>
-    <div class="hero__line" data-hero-line="2">From vision to project.</div>
+  <!-- EIGHT -->
+  <div class="split-hero__top">
+    <div class="split-hero__word">Eight</div>
+    <div class="split-hero__info">
+      <span class="eyebrow"><span class="dot"></span>Le Studio</span>
+      <p>Studio créatif digital fondé à Bruxelles. Deux cercles, un chiffre — une seule obsession : construire des marques qui gagnent.</p>
+    </div>
   </div>
 
-  <div class="hero__cta-block">
+  <!-- BANDE -->
+  <div class="split-hero__band" aria-hidden="true">
+    <div class="split-hero__band-track">
+      <span>Branding</span><span class="sep"> · </span><span>Web Design</span><span class="sep"> · </span><span>Direction artistique</span><span class="sep"> · </span><span>Bruxelles</span><span class="sep"> · </span><span>№ 008</span><span class="sep"> · </span><span>From idea to identity</span><span class="sep"> · </span><span>Built for winners</span><span class="sep"> · </span>
+      <span>Branding</span><span class="sep"> · </span><span>Web Design</span><span class="sep"> · </span><span>Direction artistique</span><span class="sep"> · </span><span>Bruxelles</span><span class="sep"> · </span><span>№ 008</span><span class="sep"> · </span><span>From idea to identity</span><span class="sep"> · </span><span>Built for winners</span><span class="sep"> · </span>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="split-hero__bot">
+    <div class="split-hero__info">
+      <span class="eyebrow"><span class="dot"></span>Disciplines</span>
+      <p>Branding · Web Design · Direction artistique<br/>Contenu · Print · Réseaux sociaux</p>
+    </div>
+    <div class="split-hero__word">Projects</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="split-hero__cta">
     <a class="btn magnet" href="#projets">
       <span>Voir les projets</span>
-      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"></path><path d="M9 7h8v8"></path></svg>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
     </a>
-    <div class="hero__scroll"><span>Défiler</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 5v14"></path><path d="M6 13l6 6 6-6"></path></svg></div>
+    <a class="btn magnet" href="#contact" style="background:var(--paper);color:var(--ink);border-color:var(--paper)">
+      <span>Démarrer un projet</span>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
   </div>
 
-  <div class="hero__corner hero__corner--bl">Studio créatif digital — Bruxelles</div>
-  <div class="hero__corner hero__corner--br">04 places · 2026</div>
+  <div class="split-hero__corner split-hero__corner--bl">Studio créatif digital — Bruxelles</div>
+  <div class="split-hero__corner split-hero__corner--br">04 places · 2026</div>
 </section>
 
 <!-- ============================== MARQUEE ============================== -->

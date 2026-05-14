@@ -10,13 +10,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:         #0a0a0a;
-    --paper:       #f6f2ea;
-    --bone:        #d8d0bd;
-    --line:        rgba(255,255,255,0.10);
-    --line-strong: rgba(255,255,255,0.22);
-    --muted:       rgba(246,242,234,0.58);
-    --muted-2:     rgba(246,242,234,0.40);
+    --ink:         #0d0a07;
+    --paper:       #f5ece0;
+    --bone:        #c8a070;
+    --line:        rgba(255,200,140,0.10);
+    --line-strong: rgba(255,200,140,0.20);
+    --muted:       rgba(245,236,224,0.55);
+    --muted-2:     rgba(245,236,224,0.38);
     --sans:        "Helvetica Neue", Helvetica, Arial, sans-serif;
     --display:     "Montserrat", "Helvetica Neue", Arial, sans-serif;
     --mono:        "Geist Mono", ui-monospace, "SF Mono", monospace;
@@ -38,8 +38,9 @@
 
   body {
     background:
-      radial-gradient(1200px 600px at 80% -10%, rgba(216,208,189,0.06), transparent 60%),
-      radial-gradient(900px 700px at -10% 60%, rgba(216,208,189,0.04), transparent 70%),
+      radial-gradient(ellipse 150% 55% at 50% -5%, rgba(68,78,95,0.65) 0%, transparent 48%),
+      radial-gradient(ellipse 120% 65% at 15% 55%, rgba(196,98,26,0.42) 0%, transparent 55%),
+      radial-gradient(ellipse 120% 65% at 85% 50%, rgba(172,72,12,0.38) 0%, transparent 55%),
       var(--ink);
   }
 
@@ -345,12 +346,15 @@
       blob += pull * 0.25;
       blob = clamp(blob, 0., 1.);
 
-      vec3 ink   = vec3(0.039, 0.039, 0.039);
-      vec3 warm  = vec3(0.847, 0.816, 0.745);
-      vec3 glow  = vec3(0.55,  0.50,  0.40);
+      vec3 ink   = vec3(0.051, 0.039, 0.027);
+      vec3 warm  = vec3(0.769, 0.384, 0.098);
+      vec3 glow  = vec3(0.941, 0.565, 0.176);
+      vec3 cool  = vec3(0.267, 0.306, 0.373);
 
-      vec3 col = mix(ink, mix(warm * 0.12, glow * 0.18, blob), blob * 0.85);
-      col += pull * 0.04 * warm;
+      float sunsetT = clamp(uv.y * 1.2, 0.0, 1.0);
+      vec3 sky = mix(mix(warm, cool, sunsetT), ink, 0.55);
+      vec3 col = mix(sky, mix(warm * 0.18, glow * 0.28, blob), blob * 0.90);
+      col += pull * 0.06 * glow;
 
       gl_FragColor = vec4(col, 1.0);
     }
