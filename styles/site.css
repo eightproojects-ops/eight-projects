@@ -597,6 +597,7 @@ p{ text-wrap: pretty; }
   .svc-hstick .services__head{ padding-bottom: 28px; }
   .svc-track{
     transform: none !important;
+    width: 100%; max-width: 100vw;
     overflow-x: auto; overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
