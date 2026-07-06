@@ -1,0 +1,8 @@
+# dépendances / build (héritage Next.js, inutiles pour le site statique)
+node_modules/
+.next/
+next-env.d.ts
+
+# système
+.DS_Store
+**/.DS_Store

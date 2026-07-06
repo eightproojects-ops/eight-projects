@@ -396,73 +396,33 @@
   /* ---------- year ---------- */
   $$('[data-year]').forEach((el) => el.textContent = new Date().getFullYear());
 
-  /* ---------- services carousel ---------- */
-  const carousel = $('#svc-carousel');
-  if (carousel){
-    const cards = $$('.svc-card', carousel);
-    const prev = $('#svc-prev');
-    const next = $('#svc-next');
-    const counter = $('#svc-cur');
-    const progress = $('#svc-progress');
-
-    function cardWidth(){
-      if (cards.length < 2) return cards[0]?.offsetWidth || 400;
-      return cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+  /* ---------- services : défilement horizontal au scroll vertical ---------- */
+  const hscroll = $('#svc-hscroll');
+  const track = $('#svc-track');
+  if (hscroll && track){
+    let distance = 0;
+    const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+    function layout(){
+      if (isMobile()){
+        // mobile : pas d'épinglage, swipe horizontal natif (voir CSS)
+        hscroll.style.height = '';
+        track.style.transform = '';
+        return;
+      }
+      distance = Math.max(0, track.scrollWidth - window.innerWidth);
+      hscroll.style.height = (window.innerHeight + distance) + 'px';
+      onScroll();
     }
-    function activeIndex(){
-      const w = cardWidth();
-      return Math.round(carousel.scrollLeft / w);
+    function onScroll(){
+      if (isMobile()) return;
+      const top = hscroll.getBoundingClientRect().top;
+      const scrolled = Math.min(Math.max(-top, 0), distance);
+      track.style.transform = 'translate3d(' + (-scrolled) + 'px,0,0)';
     }
-    function update(){
-      const i = activeIndex();
-      const max = cards.length - 1;
-      const clamped = Math.max(0, Math.min(max, i));
-      counter.textContent = String(clamped + 1).padStart(2, '0');
-      const pct = max === 0 ? 100 : (clamped / max) * 100;
-      progress.style.width = pct + '%';
-      prev.disabled = clamped === 0;
-      next.disabled = clamped === max;
-    }
-    function goTo(i){
-      const w = cardWidth();
-      carousel.scrollTo({ left: i * w, behavior: 'smooth' });
-    }
-    prev.addEventListener('click', () => goTo(Math.max(0, activeIndex() - 1)));
-    next.addEventListener('click', () => goTo(Math.min(cards.length - 1, activeIndex() + 1)));
-    carousel.addEventListener('scroll', () => { window.requestAnimationFrame(update); }, { passive: true });
-    window.addEventListener('resize', update);
-
-    let isDown = false, startX = 0, startScroll = 0;
-    carousel.addEventListener('pointerdown', (e) => {
-      isDown = true;
-      startX = e.clientX; startScroll = carousel.scrollLeft;
-      carousel.classList.add('is-dragging');
-      try { carousel.setPointerCapture(e.pointerId); } catch(_){}
-    });
-    carousel.addEventListener('pointermove', (e) => {
-      if (!isDown) return;
-      const dx = e.clientX - startX;
-      carousel.scrollLeft = startScroll - dx;
-    });
-    function endDrag(e){
-      if (!isDown) return;
-      isDown = false;
-      carousel.classList.remove('is-dragging');
-      try { carousel.releasePointerCapture(e.pointerId); } catch(_){}
-      const w = cardWidth();
-      const i = Math.round(carousel.scrollLeft / w);
-      goTo(Math.max(0, Math.min(cards.length - 1, i)));
-    }
-    carousel.addEventListener('pointerup', endDrag);
-    carousel.addEventListener('pointercancel', endDrag);
-
-    carousel.tabIndex = 0;
-    carousel.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight'){ goTo(Math.min(cards.length-1, activeIndex()+1)); e.preventDefault(); }
-      if (e.key === 'ArrowLeft'){ goTo(Math.max(0, activeIndex()-1)); e.preventDefault(); }
-    });
-
-    update();
+    window.addEventListener('scroll', () => window.requestAnimationFrame(onScroll), { passive: true });
+    window.addEventListener('resize', layout);
+    window.addEventListener('load', layout);
+    layout();
   }
 
   /* ---------- WORDMARK: scroll-driven melt ---------- */
@@ -490,7 +450,7 @@
     const tz = 'Europe/Paris';
     const now = new Date();
     const fmt = new Intl.DateTimeFormat('fr-FR', { hour: '2-digit', minute: '2-digit', second:'2-digit', timeZone: tz });
-    $$('[data-clock]').forEach((el) => el.textContent = fmt.format(now) + ' \u00b7 PARIS');
+    $$('[data-clock]').forEach((el) => el.textContent = fmt.format(now) + ' \u00b7 BRUXELLES');
   }
   setInterval(tickClock, 1000); tickClock();
 

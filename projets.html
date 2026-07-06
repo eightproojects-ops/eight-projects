@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eight Projects — Studio créatif digital</title>
+<meta name="description" content="Eight Projects — studio créatif digital. Branding, web design, direction artistique. From idea to identity. From vision to project." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/site.css" />
+<style>
+/* ====== SPLIT HERO ====== */
+.split-hero{
+  position:relative; overflow:hidden;
+  min-height:100dvh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding-top: clamp(80px,10vh,120px);
+  padding-bottom: clamp(190px,28vh,300px);
+}
+.hero-lead{ transform:translateY(45px); }
+/* dégradé animé en fond du hero */
+.split-hero::before{
+  content:""; position:absolute; inset:-30%;
+  z-index:0; pointer-events:none;
+  background:
+    radial-gradient(40% 44% at 22% 30%, rgba(240,124,28,0.60), transparent 60%),
+    radial-gradient(36% 42% at 78% 68%, rgba(196,80,14,0.55), transparent 60%),
+    radial-gradient(42% 48% at 60% 20%, rgba(96,112,140,0.42), transparent 62%);
+  filter:blur(46px);
+  animation:heroDrift 13s ease-in-out infinite alternate;
+}
+@keyframes heroDrift{
+  0%   { transform:translate3d(-9%,-7%,0) scale(1.05) rotate(0deg); }
+  50%  { transform:translate3d(10%,8%,0)  scale(1.2) rotate(12deg); }
+  100% { transform:translate3d(-7%,9%,0)  scale(1.1) rotate(-9deg); }
+}
+.split-hero > *{ position:relative; z-index:1; }
+@media (prefers-reduced-motion:reduce){
+  .split-hero::before{ animation:none; }
+}
+.split-hero__top,.split-hero__bot{
+  position:relative; overflow:hidden;
+  display:grid; align-items:end;
+  padding:0 var(--pad-x);
+}
+.split-hero__top{ grid-template-columns:1fr auto; }
+.split-hero__bot{ grid-template-columns:auto 1fr; }
+.split-hero__word{
+  font-family:var(--display); font-weight:300;
+  font-size: clamp(88px,17vw,248px);
+  letter-spacing:-.04em; line-height:.86;
+  color:var(--paper); text-transform:uppercase;
+  white-space:nowrap; user-select:none;
+  padding-bottom:10px;
+}
+.split-hero__info{
+  max-width:260px; padding-bottom:18px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.split-hero__info p{
+  font-family:var(--sans); font-size:13px; line-height:1.65;
+  color:var(--muted);
+}
+.split-hero__band{
+  height:42px; overflow:hidden;
+  background:var(--paper); margin:10px 0;
+  display:flex; align-items:center;
+}
+.split-hero__band-track{
+  display:flex; gap:40px; width:max-content;
+  animation:sh-ticker 24s linear infinite;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink); white-space:nowrap; padding:0 20px;
+}
+.split-hero__band-track .sep{ color:rgba(10,10,10,.35); }
+@keyframes sh-ticker{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.split-hero__cta{
+  display:flex; gap:16px; align-items:center;
+  padding:28px var(--pad-x) 0;
+}
+.hero-lead{
+  padding:0 var(--pad-x);
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+  gap:clamp(28px,4vh,48px);
+  max-width:100%; width:100%;
+}
+.hero-cta{
+  position:absolute; left:0; right:0;
+  bottom:clamp(120px,20vh,220px);
+  justify-content:center; padding:0;
+  z-index:2;
+}
+.hero-lead .eyebrow{ margin-bottom:4px; }
+.hero-lead__title{
+  font-family:"Sackers Script","Snell Roundhand","Apple Chancery",cursive;
+  font-weight:400;
+  font-size:clamp(28px,4.2vw,60px);
+  letter-spacing:0; line-height:1.2;
+  color:var(--paper); margin:0;
+  white-space:nowrap;
+}
+.hero-lead__bullet{
+  color:var(--bone); font-size:.7em;
+  vertical-align:middle; margin:0 .35em;
+}
+/* fondu doux unique à l'arrivée */
+.fade-up{
+  opacity:0; transform:translateY(14px);
+  animation:fadeUp 1.1s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:var(--d,0ms);
+}
+@keyframes fadeUp{ to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){
+  .fade-up{ animation:none; opacity:1; transform:none; }
+}
+.split-hero__corner{
+  position:absolute;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
+.split-hero__corner--tl{ top:clamp(16px,3vh,32px); left:var(--pad-x); }
+.split-hero__corner--tr{ top:clamp(16px,3vh,32px); right:var(--pad-x); }
+.split-hero__corner--bl{ bottom:clamp(20px,3vh,36px); left:var(--pad-x); }
+.split-hero__corner--br{ bottom:clamp(20px,3vh,36px); right:var(--pad-x); }
+@media(max-width:800px){
+  .split-hero__info{ display:none; }
+  .split-hero__top,.split-hero__bot{ grid-template-columns:1fr; }
+}
+
+/* ====== MANIFESTO ====== */
+.manifesto { padding-inline: var(--pad-x); }
+.manifesto__inner {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(24px, 3.5vw, 48px) clamp(20px, 3.5vw, 52px);
+  background:
+    radial-gradient(60% 60% at 0% 100%, oklch(0.82 0.10 60 / 0.10), transparent 60%),
+    radial-gradient(50% 50% at 100% 0%, oklch(0.78 0.10 230 / 0.08), transparent 60%),
+    rgba(255,255,255,.025);
+  display: grid;
+  gap: 36px;
+}
+.manifesto__text {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(18px, 1.8vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -.02em;
+  color: var(--paper);
+}
+.manifesto__text em {
+  color: var(--bone);
+  font-style: italic !important;
+}
+.manifesto__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+.manifesto__stat {
+  padding-right: 24px;
+  border-right: 1px solid var(--line);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.manifesto__stat:first-child { padding-left: 0; }
+.manifesto__stat:last-child { border-right: 0; }
+.manifesto__stat b {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(22px, 2.2vw, 36px);
+  letter-spacing: -.04em;
+  color: var(--paper);
+  line-height: 1;
+}
+.manifesto__stat span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 800px) {
+  .manifesto__stats { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .manifesto__stat { border-right: 0; padding-left: 0; }
+}
+
+/* ====== TESTIMONIALS ====== */
+.testimonials { padding-inline: var(--pad-x); }
+.testi__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+.testi__title {
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 200;
+  line-height: .98;
+  letter-spacing: -.03em;
+}
+.testi__title em { font-style: italic !important; font-weight: 200; color: var(--bone); }
+.testi__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.testi__card {
+  border-radius: 24px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 320px;
+  transition: border-color .5s var(--ease);
+}
+.testi__card:hover { border-color: var(--line-strong); }
+.testi__quote {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--paper);
+  font-style: italic;
+}
+.testi__author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.testi__name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.testi__role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 900px) { .testi__grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav glass">
+  <a class="nav__brand" href="index.html#top">
+    <span class="wm">Eight Projects</span>
+  </a>
+  <div class="nav__menu" role="menubar">
+    <a href="index.html#univers">Univers</a>
+    <a href="index.html#services">Services</a>
+    <a href="projets.html">Projets</a>
+    <a href="index.html#approche">Approche</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+  <a class="nav__cta" href="index.html#contact">
+    <span>Démarrer un projet</span>
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+  </a>
+</nav>
+
+<main style="padding-top:clamp(90px,12vh,140px)">
+<section class="section projects" id="projets">
+  <div class="projects__head">
+    <div class="reveal">
+      <span class="eyebrow"><span class="dot"></span><span class="num">05</span> · Projets</span>
+      <h2 class="projects__title" data-split>Sept projets — <em>une grammaire visuelle.</em></h2>
+    </div>
+    <p class="hero__lede reveal" style="max-width:36ch">Sélection 2025–2026. Cliquez sur une ligne pour ouvrir l&apos;étude détaillée.</p>
+  </div>
+
+  <ol class="wk">
+
+    <!-- 01 Maison Octave -->
+    <li>
+      <a class="wk__row" href="projects/maison-octave.html" style="--wk-accent: oklch(0.82 0.10 60); --wk-accent-2: oklch(0.68 0.10 60);">
+        <span class="wk__num"><span class="dot"></span>01 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-bottle"></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Maison <em>Octave</em></h3>
+            <p class="wk__sub">refonte d&apos;identité parfumerie centenaire</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Paris</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Packaging</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 02 Atelier Vega -->
+    <li>
+      <a class="wk__row" href="projects/atelier-vega.html" style="--wk-accent: oklch(0.78 0.10 230); --wk-accent-2: oklch(0.62 0.10 230);">
+        <span class="wk__num"><span class="dot"></span>02 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-browser"><div class="mk-browser__bar"><span></span><span></span><span></span></div><div class="mk-browser__pg"><div class="h">Atelier Vega — architecture</div><div class="ph"></div></div></div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Atelier <em>Vega</em></h3>
+            <p class="wk__sub">site éditorial studio d&apos;architecture</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Bruxelles</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Web · Editorial</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 03 Noctis -->
+    <li>
+      <a class="wk__row" href="projects/noctis.html" style="--wk-accent: oklch(0.72 0.08 30); --wk-accent-2: oklch(0.58 0.08 30);">
+        <span class="wk__num"><span class="dot"></span>03 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-book"></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Noctis</h3>
+            <p class="wk__sub">livre d&apos;artiste — édition limitée</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Lyon</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Print · Édition</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 04 Studio Halo -->
+    <li>
+      <a class="wk__row" href="projects/studio-halo.html" style="--wk-accent: oklch(0.78 0.09 160); --wk-accent-2: oklch(0.62 0.09 160);">
+        <span class="wk__num"><span class="dot"></span>04 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-grid3">
+            <div class="p"><div></div><div class="cap">Atelier no.1</div></div>
+            <div class="p"><div></div><div class="cap">Cahiers 02</div></div>
+            <div class="p"><div></div><div class="cap">Halo · light</div></div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Studio <em>Halo</em></h3>
+            <p class="wk__sub">système éditorial réseaux sociaux</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Zurich</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Social · Système</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 05 Onyx -->
+    <li>
+      <a class="wk__row" href="projects/onyx-parfums.html" style="--wk-accent: oklch(0.72 0.06 280); --wk-accent-2: oklch(0.55 0.06 280);">
+        <span class="wk__num"><span class="dot"></span>05 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-box"><div class="mk-box__case"></div><div class="mk-box__bottle"></div></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Onyx <em>Parfums</em></h3>
+            <p class="wk__sub">identité &amp; packaging — maison de niche</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Grasse</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Packaging</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 06 Volta -->
+    <li>
+      <a class="wk__row" href="projects/volta-mobility.html" style="--wk-accent: oklch(0.80 0.10 130); --wk-accent-2: oklch(0.62 0.10 130);">
+        <span class="wk__num"><span class="dot"></span>06 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-phone">
+            <div class="mk-phone__top"><span>9:41</span><span>·· ·· ··</span></div>
+            <div class="mk-phone__body">
+              <div class="mk-phone__title"><small>Volta · live</small>Disponible<br/>à 60 m.</div>
+              <div class="mk-phone__mid"><b>04</b><em>min · arr.</em></div>
+              <div class="mk-phone__cta">Réserver — 4€</div>
+            </div>
+            <div class="mk-phone__bot"><span>Carte</span><span>Profil</span></div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Volta <em>Mobility</em></h3>
+            <p class="wk__sub">identité &amp; UI — startup mobilité</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Lisbonne</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · UI</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 07 Atelier Sérine -->
+    <li>
+      <a class="wk__row" href="projects/atelier-serine.html" style="--wk-accent: oklch(0.58 0.17 18); --wk-accent-2: oklch(0.42 0.15 18);">
+        <span class="wk__num"><span class="dot"></span>07 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-palette">
+            <div class="mk-palette__top">
+              <span class="mk-palette__label">Identité visuelle</span>
+              <span class="mk-palette__title">Atelier<br/>Sérine</span>
+            </div>
+            <div class="mk-palette__swatches">
+              <span style="background:#59050C;flex:2"></span>
+              <span style="background:#BF364F;flex:2"></span>
+              <span style="background:#D96941;flex:1.5"></span>
+              <span style="background:#BF8975;flex:1.5"></span>
+            </div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Atelier <em>Sérine</em></h3>
+            <p class="wk__sub">refonte graphique — art floral événementiel</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Bruxelles</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Identité</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+  </ol>
+</section>
+</main>
+
+<script src="scripts/animations.js"></script>
+<script src="scripts/site.js"></script>
+</body>
+</html>

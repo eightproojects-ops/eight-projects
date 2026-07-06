@@ -48,7 +48,7 @@
         function update(now) {
           const p = Math.min((now - start) / duration, 1);
           const ease = 1 - Math.pow(1 - p, 3);
-          el.textContent = String(Math.round(ease * num)).padStart(2, '0');
+          el.textContent = String(Math.round(ease * num));
           if (p < 1) requestAnimationFrame(update);
         }
         requestAnimationFrame(update);

@@ -3,442 +3,952 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Eight Projects — Bientôt</title>
-<meta name="description" content="Bientôt disponible." />
+<title>Eight Projects — Studio créatif digital</title>
+<meta name="description" content="Eight Projects — studio créatif digital. Branding, web design, direction artistique. From idea to identity. From vision to project." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/site.css" />
 <style>
-  :root {
-    --ink:         #0d0a07;
-    --paper:       #f5ece0;
-    --bone:        #c8a070;
-    --line:        rgba(255,200,140,0.10);
-    --line-strong: rgba(255,200,140,0.20);
-    --muted:       rgba(245,236,224,0.55);
-    --muted-2:     rgba(245,236,224,0.38);
-    --sans:        "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --display:     "Montserrat", "Helvetica Neue", Arial, sans-serif;
-    --mono:        "Geist Mono", ui-monospace, "SF Mono", monospace;
-    --ease:        cubic-bezier(.2,.7,.2,1);
-    --pad-x:       clamp(24px, 5vw, 96px);
-  }
+/* ====== SPLIT HERO ====== */
+.split-hero{
+  position:relative; overflow:hidden;
+  min-height:100dvh;
+  display:flex; flex-direction:column; justify-content:center;
+  padding-top: clamp(80px,10vh,120px);
+  padding-bottom: clamp(190px,28vh,300px);
+}
+.hero-lead{ transform:translateY(45px); }
+/* dégradé animé en fond du hero */
+.split-hero::before{
+  content:""; position:absolute; inset:-30%;
+  z-index:0; pointer-events:none;
+  background:
+    radial-gradient(40% 44% at 22% 30%, rgba(240,124,28,0.60), transparent 60%),
+    radial-gradient(36% 42% at 78% 68%, rgba(196,80,14,0.55), transparent 60%),
+    radial-gradient(42% 48% at 60% 20%, rgba(96,112,140,0.42), transparent 62%);
+  filter:blur(46px);
+  animation:heroDrift 13s ease-in-out infinite alternate;
+}
+@keyframes heroDrift{
+  0%   { transform:translate3d(-9%,-7%,0) scale(1.05) rotate(0deg); }
+  50%  { transform:translate3d(10%,8%,0)  scale(1.2) rotate(12deg); }
+  100% { transform:translate3d(-7%,9%,0)  scale(1.1) rotate(-9deg); }
+}
+.split-hero > *{ position:relative; z-index:1; }
+@media (prefers-reduced-motion:reduce){
+  .split-hero::before{ animation:none; }
+}
+.split-hero__top,.split-hero__bot{
+  position:relative; overflow:hidden;
+  display:grid; align-items:end;
+  padding:0 var(--pad-x);
+}
+.split-hero__top{ grid-template-columns:1fr auto; }
+.split-hero__bot{ grid-template-columns:auto 1fr; }
+.split-hero__word{
+  font-family:var(--display); font-weight:300;
+  font-size: clamp(88px,17vw,248px);
+  letter-spacing:-.04em; line-height:.86;
+  color:var(--paper); text-transform:uppercase;
+  white-space:nowrap; user-select:none;
+  padding-bottom:10px;
+}
+.split-hero__info{
+  max-width:260px; padding-bottom:18px;
+  display:flex; flex-direction:column; gap:10px;
+}
+.split-hero__info p{
+  font-family:var(--sans); font-size:13px; line-height:1.65;
+  color:var(--muted);
+}
+.split-hero__band{
+  height:42px; overflow:hidden;
+  background:var(--paper); margin:10px 0;
+  display:flex; align-items:center;
+}
+.split-hero__band-track{
+  display:flex; gap:40px; width:max-content;
+  animation:sh-ticker 24s linear infinite;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink); white-space:nowrap; padding:0 20px;
+}
+.split-hero__band-track .sep{ color:rgba(10,10,10,.35); }
+@keyframes sh-ticker{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+.split-hero__cta{
+  display:flex; gap:16px; align-items:center;
+  padding:28px var(--pad-x) 0;
+}
+.hero-lead{
+  padding:0 var(--pad-x);
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center;
+  gap:clamp(28px,4vh,48px);
+  max-width:100%; width:100%;
+}
+.hero-cta{
+  position:absolute; left:0; right:0;
+  bottom:clamp(120px,20vh,220px);
+  justify-content:center; padding:0;
+  z-index:2;
+}
+.hero-lead .eyebrow{ margin-bottom:4px; }
+.hero-lead__title{
+  font-family:var(--sans);
+  font-weight:100;
+  font-size:clamp(24px,3.2vw,40px);
+  letter-spacing:-.02em; line-height:1.2;
+  color:var(--paper); margin:0;
+  white-space:nowrap;
+}
+.hero-lead__bullet{
+  color:var(--bone); font-size:.7em;
+  vertical-align:middle; margin:0 .35em;
+}
+/* hero — mobile : phrase sur plusieurs lignes, boutons empilés */
+@media (max-width: 600px){
+  .hero-lead__title{ white-space:normal; font-size:clamp(22px,6.4vw,30px); line-height:1.3; }
+  .hero-cta{ flex-direction:column; align-items:center; gap:12px; bottom:clamp(72px,14vh,140px); }
+  .hero-cta .btn{ width:min(320px,82vw); justify-content:center; }
+  .split-hero__corner{ font-size:9px; }
+}
+/* fondu doux unique à l'arrivée */
+.fade-up{
+  opacity:0; transform:translateY(14px);
+  animation:fadeUp 1.1s cubic-bezier(.22,1,.36,1) forwards;
+  animation-delay:var(--d,0ms);
+}
+@keyframes fadeUp{ to{ opacity:1; transform:none; } }
+@media (prefers-reduced-motion:reduce){
+  .fade-up{ animation:none; opacity:1; transform:none; }
+}
+.split-hero__corner{
+  position:absolute;
+  font-family:var(--mono); font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--muted);
+}
+.split-hero__corner--tl{ top:clamp(16px,3vh,32px); left:var(--pad-x); }
+.split-hero__corner--tr{ top:clamp(16px,3vh,32px); right:var(--pad-x); }
+.split-hero__corner--bl{ bottom:clamp(20px,3vh,36px); left:var(--pad-x); }
+.split-hero__corner--br{ bottom:clamp(20px,3vh,36px); right:var(--pad-x); }
+@media(max-width:800px){
+  .split-hero__info{ display:none; }
+  .split-hero__top,.split-hero__bot{ grid-template-columns:1fr; }
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ====== MANIFESTO ====== */
+.manifesto { padding-inline: var(--pad-x); }
+.manifesto__inner {
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: clamp(24px, 3.5vw, 48px) clamp(20px, 3.5vw, 52px);
+  background:
+    radial-gradient(60% 60% at 0% 100%, oklch(0.82 0.10 60 / 0.10), transparent 60%),
+    radial-gradient(50% 50% at 100% 0%, oklch(0.78 0.10 230 / 0.08), transparent 60%),
+    rgba(255,255,255,.025);
+  display: grid;
+  gap: 36px;
+}
+.manifesto__text {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(18px, 1.8vw, 28px);
+  line-height: 1.25;
+  letter-spacing: -.02em;
+  color: var(--paper);
+}
+.manifesto__text em {
+  color: var(--bone);
+  font-style: italic !important;
+}
+.manifesto__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding-top: 24px;
+}
+.manifesto__stat {
+  padding-right: 24px;
+  border-right: 1px solid var(--line);
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+.manifesto__stat:first-child { padding-left: 24px; }
+.manifesto__stat:last-child { border-right: 0; }
+.manifesto__stat b {
+  font-family: var(--display);
+  font-weight: 200;
+  font-size: clamp(48px, 5.5vw, 92px);
+  letter-spacing: -.04em;
+  color: var(--paper);
+  line-height: 1;
+}
+.manifesto__stat b.has-plus::before { content: "+"; margin-right: .04em; }
+.manifesto__stat span {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 640px) {
+  .manifesto__stats { grid-template-columns: 1fr; gap: 28px; }
+  .manifesto__stat { border-right: 0; padding-left: 0; padding-right: 0; }
+  .manifesto__stat b { font-size: clamp(44px, 16vw, 72px); }
+}
 
-  html, body {
-    height: 100%;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: var(--sans);
-    font-weight: 300;
-    -webkit-font-smoothing: antialiased;
-    overflow: hidden;
-  }
-
-  body {
-    background:
-      radial-gradient(ellipse 150% 55% at 50% -5%, rgba(68,78,95,0.65) 0%, transparent 48%),
-      radial-gradient(ellipse 120% 65% at 15% 55%, rgba(196,98,26,0.42) 0%, transparent 55%),
-      radial-gradient(ellipse 120% 65% at 85% 50%, rgba(172,72,12,0.38) 0%, transparent 55%),
-      var(--ink);
-  }
-
-  a { color: inherit; text-decoration: none; }
-  ::selection { background: var(--paper); color: var(--ink); }
-
-  /* ---- layout ---- */
-  .cs {
-    position: fixed;
-    inset: 0;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    padding: var(--pad-x);
-    z-index: 10;
-  }
-
-  /* ---- corners ---- */
-  .cs__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .cs__bot {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  .label b { color: var(--paper); font-weight: 500; }
-
-  /* ---- logo ---- */
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .brand__name {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ---- center ---- */
-  .cs__center {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
-  }
-
-  .cs__eyebrow {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadein .8s var(--ease) .2s forwards;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--bone);
-    box-shadow: 0 0 12px rgba(216,208,189,.6);
-  }
-
-  .cs__title {
-    font-family: var(--display);
-    font-size: clamp(48px, 8vw, 120px);
-    font-weight: 200;
-    line-height: .95;
-    letter-spacing: -.02em;
-    color: var(--paper);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadein 1s var(--ease) .4s forwards;
-  }
-
-  .cs__title em {
-    font-style: italic !important;
-    color: var(--bone);
-  }
-
-  .cs__sub {
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--muted);
-    max-width: 40ch;
-    line-height: 1.8;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadein .8s var(--ease) .7s forwards;
-  }
-
-  /* ---- line ---- */
-  .cs__line {
-    position: fixed;
-    left: var(--pad-x);
-    right: var(--pad-x);
-    bottom: calc(var(--pad-x) + 52px);
-    height: 1px;
-    background: var(--line);
-    z-index: 10;
-  }
-
-  /* ---- countdown ---- */
-  .countdown {
-    display: flex;
-    gap: 40px;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadein .8s var(--ease) 1s forwards;
-  }
-
-  .countdown__item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .countdown__num {
-    font-family: var(--display);
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 200;
-    letter-spacing: -.02em;
-    color: var(--paper);
-    line-height: 1;
-    min-width: 2ch;
-  }
-
-  .countdown__label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--muted-2);
-  }
-
-  .countdown__sep {
-    font-family: var(--display);
-    font-size: clamp(28px, 4vw, 48px);
-    font-weight: 200;
-    color: var(--muted-2);
-    align-self: flex-start;
-    line-height: 1;
-    margin-top: 2px;
-  }
-
-  /* ---- noise overlay ---- */
-  .noise {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    opacity: .025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 200px;
-    z-index: 100;
-  }
-
-  /* ---- anim ---- */
-  @keyframes fadein {
-    to { opacity: 1; transform: none; }
-  }
-
-  /* ---- responsive ---- */
-  @media (max-width: 600px) {
-    .cs__bot .label:last-child { display: none; }
-    .countdown { gap: 24px; }
-  }
+/* ====== TESTIMONIALS ====== */
+.testimonials { padding-inline: var(--pad-x); }
+.testi__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding-bottom: 48px;
+}
+.testi__title {
+  font-size: clamp(40px, 5.6vw, 84px);
+  font-weight: 200;
+  line-height: .98;
+  letter-spacing: -.03em;
+}
+.testi__title em { font-style: italic !important; font-weight: 200; color: var(--bone); }
+.testi__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.testi__card {
+  border-radius: 24px;
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  min-height: 320px;
+  transition: border-color .5s var(--ease);
+}
+.testi__card:hover { border-color: var(--line-strong); }
+.testi__quote {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.65;
+  color: var(--paper);
+  font-style: italic;
+}
+.testi__author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.testi__name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.testi__role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+@media (max-width: 900px) { .testi__grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 
-<div class="noise"></div>
+<!-- ============================== LOADER (désactivé pour l'instant) ============================== -->
+<!--
+<div class="loader" aria-hidden="true">
+  <div class="loader__bar"></div>
+  <div class="loader__corner tl">Eight · Projects</div>
+  <div class="loader__corner tr">№ 008</div>
+  <div class="loader__corner bl">From idea to identity</div>
+  <div class="loader__corner br"><span class="loader__count">000%</span></div>
 
-<div class="cs">
-
-  <!-- TOP -->
-  <div class="cs__top">
-    <a class="brand" href="#">
-      <svg id="Calque_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 404.9 76.56" width="180" height="34" fill="#f6f2ea">
-        <path d="M79.18,58.26c-.85-4.44-4.59-7.59-8.59-10.06-1.83-1.13-2.14-3.82-.59-5.35,2.32-2.29,4.36-4.82,5.56-8,2.07-5.56-.3-11.47-5.61-13.82-4.32-1.91-9.58-1.69-13.76.62-6.82,3.77-8.75,12.87-4.17,19.28.78,1.09,1.66,2.02,2.64,2.87l.48.41c.15.13,0,0,.14.11.08.07.17.14.26.2.17.13.34.26.51.39.31.24.63.46.95.69.62.43,1.25.89,1.9,1.27.26.15.53.29.8.44,0,0,.02,0,.03.01l7.83,4.59c2.19,1.27,4.09,2.76,5.84,4.62,2.55,2.83,3.67,6.69,2.69,10.51-.74,2.87-2.69,5.05-5.32,6.31-3.58,1.73-7.36,1.7-11.03.59-2.94-.89-5.47-2.47-7.32-5.04-.1-.14-.19-.28-.27-.43-4.12-7.37-1.66-15.32,3.82-20.68,0,0,0,0,0,0,0,0,0,0,0,0-.01,0,0,0,0,0-.11.09-.86.71-1.23,1.05-3.88,3.61-7.34,8.08-7.89,13.19-1.01,9.31,7.16,14.92,15.52,14.5,3.71-.19,7.19-1.05,10.4-3.17,4.94-3.28,7.54-9.13,6.4-15.11ZM64.49,44.74c-3.62-2.03-7.54-4.41-9.98-7.54-1.81-2.56-2.71-5.69-2.05-8.86.63-3,2.61-5.35,5.36-6.4,3.24-1.24,6.95-1.01,9.95.82,2.71,1.65,4.22,4.6,4.63,7.81.02.13.03.27.03.41.21,4.87-1.23,9.39-4.01,12.94-.9,1.16-2.69,1.52-3.94.81Z"/><path d="M167.05,66.56c0,2.62.36,5.76,2.68,6.17l.02.79h-9.07s-.05-.79-.05-.79c2.47-.36,2.8-3.75,2.8-6.6V29.72s-.41-3.86-.41-3.86c-.18-1.64-2.49-2.14-2.4-2.43l.16-.53,5.38-2.3c.13-.05.5-.17.57-.06l.33.48.02,5.44c4.88-3.67,10.28-6.62,16.38-5.91,4.83.56,8.78,3.69,10.75,8.11,2.36,5.3,2.37,11.45.12,16.75-2.63,6.24-8.36,10.11-15.2,10.26-4.36.1-8.4-1.25-12.07-3.82v14.71ZM182.73,54.25c3.92-.6,6.84-3.03,8.4-6.48,1.14-2.53,1.52-5.21,1.5-8.03-.05-7.39-2.69-15.38-10.44-17.23-5.79-1.1-10.75,1.32-15.14,4.97l.04,17.01c0,1.42.79,2.87,1.6,3.99,3.17,4.38,8.56,6.61,14.04,5.77Z"/><path d="M111.14,34.03c0-5.06-1.64-9.87-6.74-11.32-6.04-1.71-11.3,1.22-16.03,5.1v20.4c.01,2.46.44,5.69,2.58,5.98l.17.89h-9.15c0-.33-.03-.7.08-.74l.53-.21c1.93-.78,2.19-3.94,2.19-6.52V9.02c0-1.49-.17-2.84-.62-4.16-.33-.95-1.35-1.33-2.15-1.84-.2-.17.26-.69.52-.8L87.71.01c.19-.08.67.26.67.51v26.24c5.35-4.22,11.98-7.52,18.74-5.9,5.45,1.4,7.62,6.4,7.63,11.78l.03,15.76c0,1.41.24,2.8.62,4.08.56,1.86,2.48,1.3,2.12,2.57h-9.13s-.02-.76-.02-.76c2.53-.46,2.78-3.95,2.78-6.89v-13.4Z"/><path d="M261.01,38.09c0,9.78-8.04,17.71-17.95,17.71s-17.95-7.93-17.95-17.71,8.04-17.71,17.95-17.71,17.95,7.93,17.95,17.71ZM257.22,38.43c-1.14-8.48-7.32-17.19-16.51-16.81-5.47.23-9.81,3.67-11.19,8.98-1.89,7.27.56,15.42,6.3,20.39,4.29,3.72,10.27,4.55,15.23,1.94s6.9-8.95,6.15-14.5Z"/><path d="M12.25,51.36c7.87,3.03,14.27,1.02,19.62-5.11l.52.6c-2.08,2.52-4.34,4.66-7.12,6.36-6.19,3.8-13.97,3.28-19.55-1.37S-1.15,39.44.92,32.74c1.51-4.88,4.98-8.69,9.69-10.76,3.89-1.64,8.11-2.02,12.2-.96,5.33,1.38,8.85,5.97,8.93,11.29H3.98c-1.47,7.64.86,15.6,8.28,19.05ZM27.88,31.51c-.33-1.81-.91-3.05-1.74-4.32-2.48-3.98-6.89-6-11.59-5.51-5.51.57-9.13,4.52-10.42,9.84h23.75Z"/><path d="M307.47,51.68c2.81-1.31,4.95-3.05,6.96-5.37l.56.33c.13.08-.17.53-.27.62-2.03,2.32-4.12,4.37-6.79,5.93-6.16,3.83-13.97,3.28-19.54-1.36-5.52-4.6-6.89-12.41-4.81-19.1,1.51-4.87,4.98-8.69,9.69-10.76,3.93-1.65,8.22-2.03,12.34-.92,5.26,1.42,8.7,5.99,8.78,11.25h-27.76c-1.49,7.63.87,15.62,8.27,19.04,3.99,1.69,8.38,1.85,12.55.33ZM310.58,31.51c-.81-3.84-3.04-6.64-6.17-8.49-3.68-1.86-8.14-1.95-11.78.13-3.11,1.78-4.99,4.9-5.84,8.37h23.78Z"/><path d="M399.89,54c-5.49,3.03-14.17,1.84-19.71-1.24l-.49-7.52c.04-.08.4-.33.46-.26.81.88,1.93,4.79,6.21,7.47,3.16,1.97,7,2.64,10.61,1.88,3.22-.68,5.29-3.3,5.28-6.49-.01-3.82-3.1-5.91-6.63-7.1l-7-2.35c-4.26-1.43-7.53-3.34-7.99-7.9-.57-5.66,4.02-9.31,9.4-9.89,4.5-.49,8.97.23,13.13,1.79l.28,6.35-.33.2c-.1.06-.32-.15-.44-.28-2.07-4.91-7.06-7.82-12.44-7.31-1.99.16-3.94.66-5.38,2.07-2.5,2.44-2.18,6.53.5,8.73,1.07.87,2.19,1.66,3.49,2.11l6.4,2.19c3.46,1.18,7.74,2.46,9.09,6.15,1.6,4.4-.36,9.16-4.45,11.42Z"/><path d="M324.45,42.01c1.71,6.16,6.86,10.17,13.2,10.66,4.24.33,8.25-.8,11.46-3.62l2.88-2.78.52.56c-1.96,2.43-4.08,4.4-6.67,6.1-7.63,5.03-18.14,3.1-23.07-4.66-3.14-4.94-3.47-11.3-1.13-16.65,2.72-6.21,8.59-10.31,15.36-11.07,5.34-.6,15,1.11,12.77,4.34-1.12,1.62-3.42,2.49-5.23,1.51l-9.06-4.93c-9.73,1.91-13.62,11.17-11.03,20.52Z"/><path d="M208.04,47.82c-.02,2.63.31,6.09,2.65,6.42l.02.83h-8.94s-.1-.62-.1-.62c-.03-.16,2.08-.68,2.29-2.5l.46-4.14v-18.51c0-1.19-.16-2.33-.41-3.44-.42-1.87-2.41-2.05-2.34-2.4l.11-.56,5.66-2.43c.17.05.51.35.6.54l.03,8.05c1.01-1.71,1.78-3.15,2.98-4.58,2.49-2.99,6.16-4.3,10.1-4.01,1.26.09,2.86.2,3.66,1.24.24,2.3-2.05,4.1-4.27,3.61l-7.44-1.66c-2.56,2.36-4.92,5.59-4.94,9.17l-.09,14.99Z"/><path d="M260.89,69.69l5.37.58c3.33-2.14,4.61-6.48,4.61-10.44l.02-30.52-.27-2.91c-.21-2.26-2.57-2.6-2.52-3.15.02-.18.31-.43.53-.53l5.02-2.14c.13-.06.38-.1.49-.1.14,0,.36.39.36.54l-.02,34.27c0,8.01-4.73,15.45-12.39,18.14-1.8.63-4.48.85-5.14-.14-.14-.21-.2-.81-.11-1.07.59-1.72,2.24-2.74,4.05-2.54Z"/><path d="M370.44,53.17c4.6-.78,5.75-4.54,6.55-3.11-2.99,3.61-8.09,7.17-12.77,5.08-2.82-1.25-3.77-4.79-3.77-7.93v-25.45s-4.4-.02-4.4-.02c-.19-.55.1-1.01.5-1.43l6.26-6.64c.32-.36.7-.53,1.24-.5v7.73s10.36,0,10.36,0l-.43.85h-9.94s.03,25.46.03,25.46c0,1.76.51,3.45,1.64,4.68s3.03,1.55,4.73,1.27Z"/><path d="M134.63,53.28c4.58-.05,6.95-3.86,7.21-3.65l.44.36c.13.11-.18.48-.32.62-2.83,2.94-6.22,5.52-10.41,5.08-4.49-.46-5.75-4.77-5.75-9.06v-24.86s-4.4-.02-4.4-.02c-.03-.44.09-.96.39-1.28l6.37-6.75c.26-.4.65-.58,1.25-.55v7.73s10.37.01,10.37.01l-.41.85h-9.96s.01,24.6.01,24.6c0,1.26.18,2.5.53,3.63.65,2.11,2.48,3.32,4.68,3.29Z"/><path d="M37.25,54.28c2.32-.41,2.68-3.6,2.68-6.15v-19.18c0-2.44-.42-4.68-2.69-5.3l.08-.77,5.29-2.27c.18-.08.45-.14.59-.13s.35.41.35.55v26.56c.01,1.52.2,2.9.47,4.33.39,2.02,2.27,2.35,2.28,2.42l.06.72h-9.13s.03-.79.03-.79Z"/>
+  <div class="loader__stage">
+    <div class="loader__eight">
+      <svg viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg">
+        <path class="lemniscate-bg"
+              d="M80,10 A45,45 0 0,1 80,100 A45,45 0 0,1 80,190 A45,45 0 0,0 80,100 A45,45 0 0,0 80,10"/>
+        <path class="lemniscate-fill"
+              d="M80,10 A45,45 0 0,1 80,100 A45,45 0 0,1 80,190 A45,45 0 0,0 80,100 A45,45 0 0,0 80,10"/>
       </svg>
+    </div>
+    <div class="loader__label">Chargement · loading</div>
+  </div>
+</div>
+-->
+
+<!-- ============================== NAV ============================== -->
+<nav class="nav glass">
+  <a class="nav__brand" href="#top">
+    <span class="wm">Eight Projects</span>
+  </a>
+  <div class="nav__menu" role="menubar">
+    <a href="#univers">Univers</a>
+    <a href="#services">Services</a>
+    <!-- <a href="projets.html">Projets</a> -->
+    <a href="#approche">Approche</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="nav__cta" href="#contact">
+    <span>Démarrer un projet</span>
+    <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+  </a>
+  <button class="nav__burger" id="nav-burger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span>
+  </button>
+</nav>
+
+<!-- menu mobile -->
+<div class="nav-mobile" id="nav-mobile">
+  <a href="#univers">Univers</a>
+  <a href="#services">Services</a>
+  <a href="#approche">Approche</a>
+  <a href="#contact">Contact</a>
+  <a class="nav-mobile__cta" href="#contact">Démarrer un projet</a>
+</div>
+
+<!-- ============================== HERO ============================== -->
+<section class="split-hero" id="top">
+  <div class="orb orb--a" style="position:absolute;top:-120px;left:-80px;pointer-events:none;z-index:0"></div>
+  <div class="orb orb--c" style="position:absolute;bottom:-80px;right:-60px;pointer-events:none;z-index:0"></div>
+
+  <div class="split-hero__corner split-hero__corner--tl"><span class="dot"></span><span>N° 008 · Studio</span></div>
+
+  <!-- HERO LEAD -->
+  <div class="hero-lead">
+    <h1 class="hero-lead__title fade-up" style="--d:120ms">Nous donnons forme aux idées qui méritent de durer</h1>
+  </div>
+
+  <!-- CTA (ancrés en bas) -->
+  <div class="hero-cta split-hero__cta fade-up" style="padding-top:0;--d:240ms">
+    <a class="btn magnet" href="#projets">
+      <span>Voir les projets</span>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+    <a class="btn magnet" href="#contact" style="background:var(--paper);color:var(--ink);border-color:var(--paper)">
+      <span>Démarrer un projet</span>
+      <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
     </a>
   </div>
 
-  <!-- CENTER -->
-  <div class="cs__center">
-    <span class="cs__eyebrow"><span class="dot"></span>Bientôt disponible</span>
+  <div class="split-hero__corner split-hero__corner--bl">Studio créatif digital</div>
+  <div class="split-hero__corner split-hero__corner--br">Bruxelles · <span data-hero-clock>--:--</span> · 2026</div>
+</section>
 
-    <h1 class="cs__title">
-      creative studio <br> made for winners </br>
-    </h1>
+<!-- ============================== UNIVERS ============================== -->
+<section class="section universe" id="univers">
+  <div class="universe__left reveal">
+    <span class="eyebrow"><span class="dot"></span><span class="num">01</span> · Univers</span>
+    <h2 class="universe__title" data-split>Un studio,<br/><span class="universe__title-sub">pas une agence</span></h2>
+    <p class="universe__lede">
+      Eight Projects est un studio créatif digital fondé autour du chiffre 8 · symbole d&apos;infini, d&apos;équilibre, de structure et de mouvement continu.
+    </p>
+  </div>
 
-
-    <div class="countdown" id="countdown">
-      <div class="countdown__item">
-        <span class="countdown__num" id="cd-days">00</span>
-        <span class="countdown__label">Jours</span>
+  <div class="universe__blocks">
+    <div class="universe__block glass reveal">
+      <span class="b-num">01</span>
+      <div>
+        <h3>L&apos;équilibre</h3>
+        <p>Un projet peut être petit, grand, simple ou ambitieux. Ce qui compte, c&apos;est de trouver la juste direction · celle qui respecte son rythme, son échelle et son potentiel.</p>
       </div>
-      <span class="countdown__sep">·</span>
-      <div class="countdown__item">
-        <span class="countdown__num" id="cd-hours">00</span>
-        <span class="countdown__label">Heures</span>
+    </div>
+    <div class="universe__block glass reveal">
+      <span class="b-num">02</span>
+      <div>
+        <h3>La direction</h3>
+        <p>Chaque projet avance avec une intention claire. On définit ce qu&apos;il doit raconter, ce qu&apos;il doit transmettre et la place qu&apos;il doit prendre · pour construire une identité juste, lisible et reconnaissable.</p>
       </div>
-      <span class="countdown__sep">·</span>
-      <div class="countdown__item">
-        <span class="countdown__num" id="cd-mins">00</span>
-        <span class="countdown__label">Minutes</span>
+    </div>
+    <div class="universe__block glass reveal">
+      <span class="b-num">03</span>
+      <div>
+        <h3>Le système</h3>
+        <p>Une marque ne vit jamais sur un seul support. Elle doit pouvoir se déployer partout, sans perdre son âme · du site au contenu, du visuel au message, du premier regard à l&apos;expérience complète.</p>
       </div>
-      <span class="countdown__sep">·</span>
-      <div class="countdown__item">
-        <span class="countdown__num" id="cd-secs">00</span>
-        <span class="countdown__label">Secondes</span>
+    </div>
+    <div class="universe__block glass reveal">
+      <span class="b-num">04</span>
+      <div>
+        <h3>Le mouvement</h3>
+        <p>Une identité ne reste pas figée. Elle évolue, se déploie, se mesure et traverse le temps · sans perdre ce qui la rend reconnaissable.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- BOTTOM -->
-  <div class="cs__bot">
-    <span class="label"> From your vision to our project.</span>
-    <span class="label" id="clock">00:00:00 · BRUXELLES</span>
+<!-- ============================== MARQUEE ============================== -->
+
+<!-- ============================== MANIFESTO ============================== -->
+<section class="manifesto section">
+  <div class="manifesto__inner reveal">
+    <div class="manifesto__stats">
+      <div class="manifesto__stat reveal">
+        <b class="has-plus" data-count="30">30</b>
+        <span>Projets menés depuis 2025</span>
+      </div>
+      <div class="manifesto__stat reveal">
+        <b data-count="8">8</b>
+        <span>Services</span>
+      </div>
+      <div class="manifesto__stat reveal">
+        <b data-count="∞">∞</b>
+        <span>Notre ambition</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== VISION (sticky scroll-morph) ============================== -->
+<section class="vision" id="vision" style="display:none">
+  <div class="vision__stick">
+    <div class="vision__head">
+      <span class="eyebrow"><span class="dot"></span><span class="num">02</span> · Vision</span>
+      <span>Huit temps · une seule lecture</span>
+    </div>
+
+    <div class="vision__stage" id="vision-stage"></div>
+
+    <div class="vision__panel">
+      <div class="vision__counter">
+        <b id="vision-step">01</b>
+        <span>/ 08</span>
+      </div>
+      <h3 class="vision__h" id="vision-h">Le chiffre.</h3>
+      <p class="vision__p" id="vision-p">Avant tout : vous et nous. Deux esprits, deux cercles. Chacun pose ses idées, son langage, ses limites.</p>
+      <div class="vision__pips" id="vision-pips">
+        <span class="pip is-on"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+        <span class="pip"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SERVICES (swipe carousel) ============================== -->
+<section class="section services" id="services">
+  <div class="svc-hscroll" id="svc-hscroll">
+    <div class="svc-hstick">
+    <div class="services__head services__head--center">
+      <span class="eyebrow"><span class="dot"></span><span class="num">02</span> · Services</span>
+      <h2 class="services__title">De la première idée à la dernière livraison, chaque discipline parle le même langage.</h2>
+    </div>
+    <div class="svc-track" id="svc-track">
+      <article class="svc-card" style="--svc-accent: oklch(0.82 0.10 60)">
+        <div class="svc-card__top"><span>01 · Branding</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--brand"><div class="glyph__ring"></div><div class="glyph__ring2"></div></div></div>
+        <h3 class="svc-card__name">Branding &amp; <em>identité visuelle</em></h3>
+        <p class="svc-card__desc">Logo, univers visuel, palette, typographies, monogramme, guidelines et cohérence globale.</p>
+        <div class="svc-card__foot"><span>Logo · Identité · Univers</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.78 0.10 230)">
+        <div class="svc-card__top"><span>02 · Web</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--web"><div class="win"><div class="bar"><i></i><i></i><i></i></div><div class="body"></div></div></div></div>
+        <h3 class="svc-card__name">Création de <em>site web</em></h3>
+        <p class="svc-card__desc">Sites vitrines, boutiques en ligne, pages de présentation, parcours utilisateur et design responsive.</p>
+        <div class="svc-card__foot"><span>Site · Shop · UX</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.72 0.08 30)">
+        <div class="svc-card__top"><span>03 · Digital</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--content"><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+        <h3 class="svc-card__name">Contenu <em>digital</em></h3>
+        <p class="svc-card__desc">Visuels web, bannières, templates, contenus promotionnels et formats adaptés au digital.</p>
+        <div class="svc-card__foot"><span>Visuel · Format · Digital</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.80 0.10 130)">
+        <div class="svc-card__top"><span>04 · Social</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--social"><div class="frame"><i></i><i></i><i></i><i></i></div></div></div>
+        <h3 class="svc-card__name">Social <em>media</em></h3>
+        <p class="svc-card__desc">Feed, stories, Reels, templates Instagram et cohérence visuelle sur les réseaux sociaux.</p>
+        <div class="svc-card__foot"><span>Feed · Stories · Reels</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.72 0.06 280)">
+        <div class="svc-card__top"><span>05 · Print</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--print"><div class="stack"><i></i><i></i><i></i></div></div></div>
+        <h3 class="svc-card__name">Supports <em>print</em></h3>
+        <p class="svc-card__desc">Cartes, flyers, affiches, menus, catalogues, papeterie et supports physiques de marque.</p>
+        <div class="svc-card__foot"><span>Carte · Édition · Support</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.78 0.09 160)">
+        <div class="svc-card__top"><span>06 · Packaging</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--art"><div class="glyph__cross"></div><div class="glyph__cross"></div><div class="dot"></div></div></div>
+        <h3 class="svc-card__name"><em>Packaging</em></h3>
+        <p class="svc-card__desc">Boîtes, étiquettes, stickers, rubans, sleeves et détails d&apos;unboxing.</p>
+        <div class="svc-card__foot"><span>Box · Sticker · Détail</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.58 0.17 18)">
+        <div class="svc-card__top"><span>07 · Motion</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--content"><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
+        <h3 class="svc-card__name">Motion <em>design</em></h3>
+        <p class="svc-card__desc">Animations simples, visuels animés, transitions, contenus dynamiques et formats vidéo courts.</p>
+        <div class="svc-card__foot"><span>Animé · Vidéo · Mouvement</span></div>
+      </article>
+
+      <article class="svc-card" style="--svc-accent: oklch(0.75 0.10 300)">
+        <div class="svc-card__top"><span>08 · Email</span></div>
+        <div class="svc-card__visual"><div class="glyph glyph--web"><div class="win"><div class="bar"><i></i><i></i><i></i></div><div class="body"></div></div></div></div>
+        <h3 class="svc-card__name">Email <em>design</em></h3>
+        <p class="svc-card__desc">Newsletters, campagnes e-mail, visuels promotionnels, templates et parcours de communication.</p>
+        <div class="svc-card__foot"><span>Newsletter · Promo · Template</span></div>
+      </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROJETS ============================== -->
+<section class="section projects" id="projets" style="display:none">
+  <div class="projects__head">
+    <div class="reveal">
+      <span class="eyebrow"><span class="dot"></span><span class="num">05</span> · Projets</span>
+      <h2 class="projects__title" data-split>Sept projets — <em>une grammaire visuelle.</em></h2>
+    </div>
+    <p class="hero__lede reveal" style="max-width:36ch">Sélection 2025–2026. Cliquez sur une ligne pour ouvrir l&apos;étude détaillée.</p>
   </div>
 
-</div>
+  <ol class="wk">
 
-<div class="cs__line"></div>
+    <!-- 01 Maison Octave -->
+    <li>
+      <a class="wk__row" href="projects/maison-octave.html" style="--wk-accent: oklch(0.82 0.10 60); --wk-accent-2: oklch(0.68 0.10 60);">
+        <span class="wk__num"><span class="dot"></span>01 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-bottle"></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Maison <em>Octave</em></h3>
+            <p class="wk__sub">refonte d&apos;identité parfumerie centenaire</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Paris</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Packaging</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
 
+    <!-- 02 Atelier Vega -->
+    <li>
+      <a class="wk__row" href="projects/atelier-vega.html" style="--wk-accent: oklch(0.78 0.10 230); --wk-accent-2: oklch(0.62 0.10 230);">
+        <span class="wk__num"><span class="dot"></span>02 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-browser"><div class="mk-browser__bar"><span></span><span></span><span></span></div><div class="mk-browser__pg"><div class="h">Atelier Vega — architecture</div><div class="ph"></div></div></div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Atelier <em>Vega</em></h3>
+            <p class="wk__sub">site éditorial studio d&apos;architecture</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Bruxelles</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Web · Editorial</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 03 Noctis -->
+    <li>
+      <a class="wk__row" href="projects/noctis.html" style="--wk-accent: oklch(0.72 0.08 30); --wk-accent-2: oklch(0.58 0.08 30);">
+        <span class="wk__num"><span class="dot"></span>03 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-book"></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Noctis</h3>
+            <p class="wk__sub">livre d&apos;artiste — édition limitée</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Lyon</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Print · Édition</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 04 Studio Halo -->
+    <li>
+      <a class="wk__row" href="projects/studio-halo.html" style="--wk-accent: oklch(0.78 0.09 160); --wk-accent-2: oklch(0.62 0.09 160);">
+        <span class="wk__num"><span class="dot"></span>04 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-grid3">
+            <div class="p"><div></div><div class="cap">Atelier no.1</div></div>
+            <div class="p"><div></div><div class="cap">Cahiers 02</div></div>
+            <div class="p"><div></div><div class="cap">Halo · light</div></div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Studio <em>Halo</em></h3>
+            <p class="wk__sub">système éditorial réseaux sociaux</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Zurich</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Social · Système</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 05 Onyx -->
+    <li>
+      <a class="wk__row" href="projects/onyx-parfums.html" style="--wk-accent: oklch(0.72 0.06 280); --wk-accent-2: oklch(0.55 0.06 280);">
+        <span class="wk__num"><span class="dot"></span>05 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner"><div class="mk-box"><div class="mk-box__case"></div><div class="mk-box__bottle"></div></div></div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Onyx <em>Parfums</em></h3>
+            <p class="wk__sub">identité &amp; packaging — maison de niche</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Grasse</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Packaging</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 06 Volta -->
+    <li>
+      <a class="wk__row" href="projects/volta-mobility.html" style="--wk-accent: oklch(0.80 0.10 130); --wk-accent-2: oklch(0.62 0.10 130);">
+        <span class="wk__num"><span class="dot"></span>06 — 2026</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-phone">
+            <div class="mk-phone__top"><span>9:41</span><span>·· ·· ··</span></div>
+            <div class="mk-phone__body">
+              <div class="mk-phone__title"><small>Volta · live</small>Disponible<br/>à 60 m.</div>
+              <div class="mk-phone__mid"><b>04</b><em>min · arr.</em></div>
+              <div class="mk-phone__cta">Réserver — 4€</div>
+            </div>
+            <div class="mk-phone__bot"><span>Carte</span><span>Profil</span></div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Volta <em>Mobility</em></h3>
+            <p class="wk__sub">identité &amp; UI — startup mobilité</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2026</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Lisbonne</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · UI</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+    <!-- 07 Atelier Sérine -->
+    <li>
+      <a class="wk__row" href="projects/atelier-serine.html" style="--wk-accent: oklch(0.58 0.17 18); --wk-accent-2: oklch(0.42 0.15 18);">
+        <span class="wk__num"><span class="dot"></span>07 — 2025</span>
+        <div class="wk__media"><div class="wk__media-inner">
+          <div class="mk-palette">
+            <div class="mk-palette__top">
+              <span class="mk-palette__label">Identité visuelle</span>
+              <span class="mk-palette__title">Atelier<br/>Sérine</span>
+            </div>
+            <div class="mk-palette__swatches">
+              <span style="background:#59050C;flex:2"></span>
+              <span style="background:#BF364F;flex:2"></span>
+              <span style="background:#D96941;flex:1.5"></span>
+              <span style="background:#BF8975;flex:1.5"></span>
+            </div>
+          </div>
+        </div></div>
+        <div class="wk__body">
+          <div>
+            <h3 class="wk__title">Atelier <em>Sérine</em></h3>
+            <p class="wk__sub">refonte graphique — art floral événementiel</p>
+          </div>
+          <div class="wk__meta">
+            <span class="ln"><span>Année</span><strong>2025</strong></span>
+            <span class="ln"><span>Lieu</span><strong>Bruxelles</strong></span>
+            <span class="ln"><span>Discipline</span><strong>Branding · Identité</strong></span>
+            <span class="wk__cta">Étude <span class="arr">→</span></span>
+          </div>
+        </div>
+      </a>
+    </li>
+
+  </ol>
+</section>
+
+<!-- ============================== APPROCHE ============================== -->
+<section class="section approach" id="approche">
+  <div class="approach__head">
+    <div class="reveal">
+      <span class="eyebrow"><span class="dot"></span><span class="num">03</span> · Approche</span>
+      <h2 class="approach__title" data-split>La méthode</h2>
+    </div>
+    <p class="services__lede reveal">Peu importe la discipline — branding, web, contenu, print — notre méthode ne change jamais.<br/>Quatre phases. Chaque livrable est documenté, défendu, mesurable.</p>
+  </div>
+
+  <div class="approach__grid">
+    <div class="approach__cell">
+      <span class="n"><span class="dot"></span>Phase 01</span>
+      <div class="glyph-mini"></div>
+      <h4>Comprendre</h4>
+      <p>Tout commence par une obsession : vous comprendre mieux que vous ne vous comprenez. Entretiens, audit, immersion. Le brief ne se donne pas · il se construit.</p>
+      <span class="tag">Diagnostic · Cadrage · Brief</span>
+    </div>
+    <div class="approach__cell">
+      <span class="n"><span class="dot"></span>Phase 02</span>
+      <div class="glyph-mini"></div>
+      <h4>Orienter</h4>
+      <p>On transforme les idées en direction claire. On trie, on précise, on choisit · pour poser une vision juste avant de passer à la forme.</p>
+      <span class="tag">Direction · Vision · Choix</span>
+    </div>
+    <div class="approach__cell">
+      <span class="n"><span class="dot"></span>Phase 03</span>
+      <div class="glyph-mini"></div>
+      <h4>Construire</h4>
+      <p>Une fois la direction posée, chaque élément prend sa place. Identité, site, contenu ou support imprimé · tout se construit avec cohérence, détail et intention.</p>
+      <span class="tag">Exécution · Cohérence · Détail</span>
+    </div>
+    <div class="approach__cell">
+      <span class="n"><span class="dot"></span>Phase 04</span>
+      <div class="glyph-mini"></div>
+      <h4>Déployer</h4>
+      <p>On affine les derniers détails, on rassemble les éléments et on prépare la livraison · pour que chaque support soit clair, cohérent et prêt à être utilisé.</p>
+      <span class="tag">Finitions · Livraison · Clarté</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TESTIMONIALS ============================== -->
+<section class="section testimonials" id="temoignages" style="display:none">
+  <div class="testi__head reveal">
+    <span class="eyebrow"><span class="dot"></span><span class="num">06</span> · Ce qu'ils disent</span>
+    <h2 class="testi__title" data-split>Les meilleurs<br/>parlent <em>d'eux-mêmes.</em></h2>
+  </div>
+  <div class="testi__grid">
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Eight Projects n'a pas juste créé notre identité. Ils ont construit le langage de notre marque — chaque détail défendu, chaque choix assumé. Le résultat dépasse ce qu'on imaginait."</p>
+      <div class="testi__author">
+        <span class="testi__name">Léa Moreau</span>
+        <span class="testi__role">Fondatrice · Maison Octave</span>
+      </div>
+    </div>
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Travailler avec Eight Projects, c'est travailler avec des gens qui ont une position. Pas de compromis, pas de demi-mesures. Exactement ce dont notre studio avait besoin."</p>
+      <div class="testi__author">
+        <span class="testi__name">Marc Vidal</span>
+        <span class="testi__role">Directeur · Atelier Vega</span>
+      </div>
+    </div>
+    <div class="testi__card glass reveal">
+      <p class="testi__quote">"Le système qu'ils ont créé pour nous est transposable partout — du packaging au digital. Une seule grammaire, déployée avec une précision remarquable."</p>
+      <div class="testi__author">
+        <span class="testi__name">Karim Nasser</span>
+        <span class="testi__role">CEO · Volta Mobility</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="section contact" id="contact">
+  <div class="contact__inner reveal">
+    <div class="contact__grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span><span class="num">04</span> · Contact</span>
+        <h2 class="contact__title" data-split>Parlez-nous de<br/>votre <em>projet.</em></h2>
+        <p class="contact__lede">Une idée, une marque, un site ou un support à créer.<br/>Dites-nous où vous en êtes, ce dont vous avez besoin, et nous reviendrons vers vous avec une première direction claire.</p>
+
+      </div>
+
+      <form class="contact__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Envoyé · merci'; this.querySelector('button').style.background='#f6f2ea'; this.querySelector('button').style.color='#0a0a0a';">
+        <div class="contact__field">
+          <label for="cf-name">Vous êtes</label>
+          <input id="cf-name" name="name" type="text" placeholder="Nom, marque ou structure" autocomplete="name" required />
+        </div>
+        <div class="contact__field">
+          <label for="cf-email">Email</label>
+          <input id="cf-email" name="email" type="email" placeholder="vous@studio.com" autocomplete="email" required />
+        </div>
+        <div class="contact__field">
+          <label id="cf-besoin-label">Besoin</label>
+          <div class="contact__chips" role="group" aria-labelledby="cf-besoin-label">
+            <span class="contact__chip" style="--c: oklch(0.82 0.10 60)">Branding</span>
+            <span class="contact__chip" style="--c: oklch(0.78 0.10 230)">Web</span>
+            <span class="contact__chip" style="--c: oklch(0.72 0.08 30)">Direction artistique</span>
+            <span class="contact__chip" style="--c: oklch(0.80 0.10 130)">Contenu</span>
+            <span class="contact__chip" style="--c: oklch(0.72 0.06 280)">Print</span>
+            <span class="contact__chip" style="--c: oklch(0.78 0.09 160)">Social</span>
+          </div>
+        </div>
+        <div class="contact__field">
+          <label>Le projet, en deux phrases</label>
+          <textarea rows="3" placeholder="Ce que vous voulez créer — et pourquoi maintenant."></textarea>
+        </div>
+        <button type="submit" class="btn contact__submit magnet">
+          <span>Envoyer la demande</span>
+          <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 17L17 7"/><path d="M9 7h8v8"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== WORDMARK BANNER ============================== -->
+<section class="wordmark reveal" style="display:none">
+  <div class="wordmark__head">
+    <span class="eyebrow"><span class="dot"></span>№ 008 · Signature</span>
+    <span>From idea to identity — from vision to project.</span>
+  </div>
+  <div class="wordmark__stage" id="wordmark-stage">
+    <div class="wordmark__noise"></div>
+    <svg class="wordmark__mark" viewBox="0 0 336 186.6" xmlns="http://www.w3.org/2000/svg" aria-label="Eight Projects">
+    <g>
+      <path d="M132.65,185.67c-1.51-2.76,2.21-5.51,4.84-5.25l8.14.82c3.46-2.87,5.78-7.06,5.79-11.76l.09-45.7c-6.2-.03-12.17-1.3-17.33-4.62-6.85-4.4-10.2-11.8-8.54-19.65,2.08-9.83,10.47-17.41,18.62-23.33-10.1-5.98-15.91-13.88-13.88-24.47,2.8-14.57,21.07-20.55,34.85-14.89,9.04,3.72,13.08,12.92,9.47,21.63-2.91,7.04-8.85,12.25-15.33,17.26,12.04,5.83,24.55,13,21.76,27.3-2.27,11.58-11.92,18.43-24.17,20.14l-.14,39.08c-.04,10.53-6.77,19.8-16.8,23.54-2.08.78-5.83,1.42-7.37-.11ZM157.74,74.87c5.62-4.83,10.16-10.77,11.4-18,1.27-7.42-1.9-14.7-8.92-17.99-5.24-2.45-11.4-2.53-16.72-.37-6.61,2.68-9.85,9.29-8.54,15.97,2.1,10.27,13.1,15.53,22.78,20.39ZM168.9,117.43c5.27-3.17,7.77-8.37,7.34-14.08-.38-5.06-2.88-9.1-6.74-12.5-3.85-3.14-8.13-5.6-12.63-7.95l-11.04-5.77c-11.01,7.57-19.02,21.17-11.89,33.05,3.73,6.21,10.34,8.86,17.36,10.21,5.97,1.15,12.21.29,17.59-2.95Z"></path>
+      <path d="M234.38,57.16c0-2.25-.79-4.89-1.41-6.93-1.75-5.75-6.31-9.41-12.1-10.38-9.84-1.64-17.4,3.09-25.11,9.23l.12,38.01c0,2.38.93,5.7,2.56,6.89,1.2.87,2.36,1.01,1.89,2.7l-15.7-.08c-2.93-.01,3.47-2.37,3.88-6.5l.65-6.55V16.81s-.61-6.07-.61-6.07c-.38-3.79-6.21-5.24-3.91-6.26,3.49-1.54,6.97-3.15,11.09-4.48l.07,46.51c8.14-6.11,17.15-10.94,26.84-10.54,12.42.51,18.42,9.01,18.49,21.1l.18,28.54c.02,2.9.47,6.17,2.3,8.31.74.87,2.63.37,2.57,2.73l-16.61-.03c.51-1.74.92-1.7,2.09-2.53,1.66-1.17,2.68-4.26,2.68-6.62l.03-30.32Z"></path>
+      <path d="M276.2,93.09c7.74-.64,10.6-7.32,12.04-6.08.41.35.34,1.26-.11,1.73-3.65,3.83-7.35,7.14-12.44,8.6-4.26,1.23-9.24.72-12.29-2.78-2.18-2.5-3.53-6.4-3.54-9.98l-.1-45.95-7.43-.16c-.28-.77.25-2.13.95-2.89l10.36-11.18c.7-.75,1.64-1.23,2.72-1.19l.03,13.39,17.9.13c-.33,1.3-.96,1.8-1.83,1.8l-16.09.02.04,43.04c0,2.06.54,4.5,1.11,6.25,1.24,3.79,4.53,5.57,8.67,5.22Z"></path>
+      <path d="M138.38,136.46c0,13.71-11.12,24.83-24.85,24.83s-24.85-11.12-24.85-24.83,11.12-24.83,24.85-24.83,24.85,11.12,24.85,24.83ZM125.24,156.35c11.14-7.19,9.63-25.29-.21-36.22-6.14-6.82-16.05-8.65-23.67-3.33-10.28,7.18-9.33,27.76,2.93,37.87,6.02,4.96,14.31,5.98,20.95,1.69Z"></path>
+      <path d="M91.32,85.47l5.43-5.26c.35-.34,1.88.66,1.59,1.03-2.73,3.44-6.04,6.72-9.6,9.44-13.42,10.28-33.12,7.66-42.11-7.09-7.29-11.97-5.65-28.25,3.7-38.68,7.99-8.91,20.53-11.91,31.83-8.83,9.22,2.52,15.03,10.71,15.06,20h-47.79c-1.48,7.26-.76,14.88,2.65,21.64,8.01,15.9,29.98,16.71,39.24,7.74ZM49.81,54.24h40.35c-1.4-6.42-5.64-11.65-10.42-14.27-6.27-3.44-13.32-3.35-19.17-.37s-9.18,8.46-10.76,14.63Z"></path>
+      <path d="M109.34,95.66c-.74-2.37,2.36-1.86,2.93-4.71s.83-5.42.83-8.34l-.09-35.34c0-2.79-1.38-4.78-2.92-6.09l-.87-.74c-1.1-.93,5.31-4.1,9.29-5.72l.22,52.06c0,2.21.78,5.27,2.1,6.29,1.05.81,1.78.93,1.63,2.59h-13.11Z"></path>
+      <path d="M210.6,148.46c.48-.45,1.4-1.12,1.46-.78l.29,1.53c-3.52,3.95-6.93,7.05-11.55,9.57-10.52,5.04-23.61,1.9-29.64-8.47-5.65-9.72-4.31-22.51,3.32-30.81,6.7-7.28,17.27-9.56,26.44-6.4,6.67,2.29,10.69,8.51,10.75,15.52l-38.15.03c-1.3,7.31-.3,15.31,4.75,21.07,8.63,9.85,24.27,9.05,32.33-1.26ZM205.99,127.13c-1.34-6.08-5.63-10.7-10.63-12.43-9.39-3.25-18.94,1.74-21.48,12.42h32.11Z"></path>
+      <path d="M224.93,129.25c-1.37,7.39.03,15.24,5,20.71,8.85,9.75,24.36,8.58,32.26-1.68.25-.29,1.25-.95,1.31-.61l.28,1.54c-3.43,3.84-6.76,6.88-11.21,9.39-10.13,5.05-22.68,2.49-29.23-7.1-4.9-7.17-5.54-16.53-1.76-24.77,3.15-6.88,9.89-12.68,18.19-14.38,6.26-1.28,18.46-.7,20.97,4.17-.45,4-5.27,5.46-8.49,3.68l-11.7-6.47c-7.85,1.09-14.1,7.28-15.62,15.53Z"></path>
+      <path d="M327.58,159.42c-7.6,3.33-18.56,1.62-25.96-2.35l-.67-10.95c.1-.08,1.12-.41,1.21-.22l.54,1.22c4.04,9.01,13.6,14.19,23.17,11.34,3.66-1.09,5.78-4.5,6.04-7.78.29-3.7-1.58-7.25-5.22-8.65l-10.79-4.12c-3.26-1.25-6.81-2.24-9.6-4.4-5.92-4.57-5.39-13.64.39-18.12,7.15-5.54,18.53-4,26.95-.9l.2,9.16-1.22.06c-3.16-8.15-11.63-11.96-20-9.88-2.94.78-5.38,2.89-6.08,5.28-1.76,6.02,2.5,10.2,8.78,12.39l12.27,4.27c2.79.97,5.74,3.16,7.07,5.81,3.44,6.84-.09,14.76-7.09,17.83Z"></path>
+      <path d="M295.68,153.08l.9-.91c.16-.16.88.35.87.57-.15,2.91-12.24,12.61-19.39,6.43-1.99-1.72-3.42-5.07-3.43-7.96l-.16-37.39h-6.08c.11-.88.52-2.04,1.09-2.61,3.5-3.53,5.93-6.64,10.1-10.3l.22,11.39,13.76.02c.34.11.08,1.49-.42,1.49l-13.37.06.07,35.07c0,3.03,1.15,6.5,3.81,7.68,4.39,1.95,8.81-.3,12.02-3.55Z"></path>
+      <path d="M9.46,178.2c0,2.04.9,4.23,1.8,5.55,1.33.32,2.01.96,1.92,2.05l-13.18-.05c.62-1.3,1.15-1.5,2.07-2.23,1.17-.93,1.86-3.76,1.86-5.66v-55.81c0-5.11-5.57-6.07-3.34-7.01l8.52-3.59.45,8.44c5.15-4.19,10.42-7.04,16.61-7.95,8.69-1.28,16.59,2.91,20.24,10.91,6.16,13.52,1.38,31.25-12.22,36.52-8.28,3.21-17,1.78-24.76-3.3l.03,22.13ZM28.93,158.95c6.98-.47,12.1-4.91,13.96-11.36,2.28-7.94,1.4-16.59-2.22-24s-11.19-10.34-18.88-8.5c-4.67,1.12-8.59,3.58-12.37,6.7v22.19c-.01,8.69,10.17,15.6,19.51,14.97Z"></path>
+      <path d="M65.93,128.29c-.45,8.67-.22,16.68-.1,25.06.02,1.66,1.01,4.3,2.2,4.93l1.34.71c.24.13.05.83-.08,1.26l-13.27-.26c2.74-2.42,4.14-3.67,4.15-6.73l.05-31.19c0-2.95-1.17-4.43-4.3-6.34l9.57-4.32.3,11.67c1.77-3.38,3.85-6.6,7.18-8.8,4.48-2.95,10.66-3.5,15.51-1.2.53,1.49-.17,3.42-1.16,4.36s-3.04,1.83-4.49,1.51l-10.52-2.33c-2.85,3.01-6.14,7-6.38,11.65Z"></path>
+    </g>
+    </svg>
+    <div class="wordmark__edge"></div>
+  </div>
+  <div class="wordmark__foot">
+    <div><span>Fondé en</span><b>2025 · Paris</b></div>
+    <div style="text-align:center"><span>Disciplines</span><b>6 / 6 — branding, web, DA, contenu, print, social</b></div>
+    <div><span>Capacité 2026</span><b>04 places</b></div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="footer__big" style="display:none">We don't build<br/>brands. We build <em>legacies.</em></div>
+  <div>
+    <a class="footer__brand" href="#top" aria-label="Eight Projects">
+      <img src="assets/eight.svg" class="footer__logo" alt="Eight Projects" />
+    </a>
+  </div>
+  <div></div>
+  <div class="footer__cols">
+    <div>
+      <h5>Studio</h5>
+      <a href="#univers">Univers</a>
+      <a href="#approche">Approche</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div>
+      <h5>Travail</h5>
+      <a href="projets.html">Projets</a>
+      <a href="#services">Services</a>
+      <a href="#vision">Vision</a>
+    </div>
+    <div>
+      <h5>Suivre</h5>
+      <a href="#">Instagram</a>
+      <a href="#">Behance</a>
+      <a href="#">LinkedIn</a>
+    </div>
+    <div>
+      <h5>Légal</h5>
+      <a href="#">Mentions</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
+  <div class="footer__bot">
+    <span>© <span data-year>2026</span> · Eight Projects — <strong>tous droits réservés</strong></span>
+    <span class="mono"><span data-clock>00:00:00 · BRUXELLES</span></span>
+  </div>
+</footer>
+
+<script src="scripts/animations.js"></script>
+<script src="scripts/site.js"></script>
 <script>
-  // Liquid background — WebGL canvas
-  const canvas = document.createElement("canvas");
-  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;";
-  document.body.appendChild(canvas);
-
-  const gl = canvas.getContext("webgl");
-
-  const vert = `
-    attribute vec2 a_pos;
-    void main(){ gl_Position = vec4(a_pos,0,1); }
-  `;
-
-  const frag = `
-    precision highp float;
-    uniform vec2  u_res;
-    uniform vec2  u_mouse;
-    uniform float u_time;
-
-    float hash(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
-
-    float noise(vec2 p){
-      vec2 i = floor(p), f = fract(p);
-      f = f*f*(3.-2.*f);
-      float a=hash(i), b=hash(i+vec2(1,0)), c=hash(i+vec2(0,1)), d=hash(i+vec2(1,1));
-      return mix(mix(a,b,f.x),mix(c,d,f.x),f.y);
-    }
-
-    float fbm(vec2 p){
-      float v=0., a=.5;
-      for(int i=0;i<5;i++){ v+=a*noise(p); p=p*2.1+vec2(1.7,9.2); a*=.5; }
-      return v;
-    }
-
-    void main(){
-      vec2 uv  = gl_FragCoord.xy / u_res;
-      vec2 m   = u_mouse / u_res;
-      float t  = u_time * 0.18;
-
-      vec2 distort = vec2(
-        fbm(uv * 2.5 + t + vec2(0., 1.3)),
-        fbm(uv * 2.5 + t + vec2(5.2, 3.7))
-      );
-
-      float pull = 1.0 - smoothstep(0.0, 0.55, distance(uv + distort * 0.08, m));
-      distort += pull * 0.18 * normalize(m - uv + 0.001);
-
-      vec2 warped = uv + distort * 0.12;
-
-      float f = fbm(warped * 3.0 + t * 0.6);
-      float g = fbm(warped * 1.8 - t * 0.4 + 4.1);
-
-      float blob = smoothstep(0.38, 0.62, f * 0.6 + g * 0.4);
-      blob += pull * 0.25;
-      blob = clamp(blob, 0., 1.);
-
-      vec3 ink   = vec3(0.051, 0.039, 0.027);
-      vec3 warm  = vec3(0.769, 0.384, 0.098);
-      vec3 glow  = vec3(0.941, 0.565, 0.176);
-      vec3 cool  = vec3(0.267, 0.306, 0.373);
-
-      float sunsetT = clamp(uv.y * 1.2, 0.0, 1.0);
-      vec3 sky = mix(mix(warm, cool, sunsetT), ink, 0.55);
-      vec3 col = mix(sky, mix(warm * 0.18, glow * 0.28, blob), blob * 0.90);
-      col += pull * 0.06 * glow;
-
-      gl_FragColor = vec4(col, 1.0);
-    }
-  `;
-
-  function compile(type, src){
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src); gl.compileShader(s); return s;
+/* Flou progressif du hero au scroll vers la section suivante */
+(function(){
+  var hero = document.querySelector('.split-hero');
+  if(!hero || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var ticking = false;
+  function update(){
+    var h = hero.offsetHeight || window.innerHeight;
+    var p = Math.min(Math.max(window.scrollY / h, 0), 1); // 0 -> 1 sur la hauteur du hero
+    hero.style.filter = 'blur(' + (p * 14).toFixed(2) + 'px)';
+    hero.style.opacity = (1 - p * 0.55).toFixed(3);
+    ticking = false;
   }
-
-  const prog = gl.createProgram();
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER,   vert));
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, frag));
-  gl.linkProgram(prog); gl.useProgram(prog);
-
-  const buf = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
-
-  const aPos = gl.getAttribLocation(prog, "a_pos");
-  gl.enableVertexAttribArray(aPos);
-  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
-
-  const uRes   = gl.getUniformLocation(prog, "u_res");
-  const uMouse = gl.getUniformLocation(prog, "u_mouse");
-  const uTime  = gl.getUniformLocation(prog, "u_time");
-
-  let mx = window.innerWidth / 2, my = window.innerHeight / 2;
-  let cx = mx, cy = my;
-
-  document.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; });
-
-  function resize(){
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-  }
-  window.addEventListener("resize", resize); resize();
-
-  function lerp(a,b,t){ return a+(b-a)*t; }
-
-  function frame(t){
-    cx = lerp(cx, mx, 0.04);
-    cy = lerp(cy, my, 0.04);
-    gl.uniform2f(uRes,   canvas.width, canvas.height);
-    gl.uniform2f(uMouse, cx, canvas.height - cy);
-    gl.uniform1f(uTime,  t * 0.001);
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(frame);
-  }
-  requestAnimationFrame(frame);
-
-  // Countdown — change la date cible ici
-  const target = new Date("2026-05-28T00:00:00");
-
-  function pad(n) { return String(n).padStart(2, "0"); }
-
-  function tick() {
-    const now  = new Date();
-    const diff = Math.max(0, target - now);
-    const days  = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const mins  = Math.floor((diff % 3600000)  / 60000);
-    const secs  = Math.floor((diff % 60000)    / 1000);
-    document.getElementById("cd-days").textContent  = pad(days);
-    document.getElementById("cd-hours").textContent = pad(hours);
-    document.getElementById("cd-mins").textContent  = pad(mins);
-    document.getElementById("cd-secs").textContent  = pad(secs);
-  }
-
-  tick();
-  setInterval(tick, 1000);
-
-  // Clock Paris
-  function clock() {
-    const t = new Date().toLocaleTimeString("fr-FR", {
-      timeZone: "Europe/Paris",
-      hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
-    });
-    document.getElementById("clock").textContent = t + " · BRUXELLES";
-  }
-  clock();
-  setInterval(clock, 1000);
+  window.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(update); }
+  }, {passive:true});
+  update();
+})();
 </script>
-
+<script>
+/* Heure (Bruxelles) dans le coin bas-droit du hero */
+(function(){
+  var els = document.querySelectorAll('[data-hero-clock]');
+  if(!els.length) return;
+  function tick(){
+    var t = new Date().toLocaleTimeString('fr-BE',{hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Europe/Brussels'});
+    els.forEach(function(el){ el.textContent = t; });
+  }
+  tick(); setInterval(tick, 1000);
+})();
+</script>
+<script>
+/* Menu mobile (hamburger) */
+(function(){
+  var burger = document.getElementById('nav-burger');
+  var menu = document.getElementById('nav-mobile');
+  if(!burger || !menu) return;
+  function close(){ burger.classList.remove('is-open'); menu.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  function toggle(){
+    var open = !menu.classList.contains('is-open');
+    burger.classList.toggle('is-open', open);
+    menu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', toggle);
+  menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', close); });
+})();
+</script>
 </body>
 </html>
